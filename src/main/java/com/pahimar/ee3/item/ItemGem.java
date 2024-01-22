@@ -1,9 +1,7 @@
 package com.pahimar.ee3.item;
 
-import com.pahimar.ee3.reference.Names;
-import com.pahimar.ee3.reference.Textures;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -11,15 +9,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 
-import java.util.List;
+import com.pahimar.ee3.reference.Names;
+import com.pahimar.ee3.reference.Textures;
 
-public class ItemGem extends ItemEE
-{
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class ItemGem extends ItemEE {
+
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
 
-    public ItemGem()
-    {
+    public ItemGem() {
         super();
         this.setMaxStackSize(64);
         this.setHasSubtypes(true);
@@ -27,43 +28,42 @@ public class ItemGem extends ItemEE
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return String.format("item.%s%s", Textures.RESOURCE_PREFIX, Names.Items.GEM);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack itemStack)
-    {
-        return String.format("item.%s%s%s", Textures.RESOURCE_PREFIX, Names.Items.GEM, Names.Items.GEM_SUBTYPES[MathHelper.clamp_int(itemStack.getItemDamage(), 0, Names.Items.GEM_SUBTYPES.length - 1)]);
+    public String getUnlocalizedName(ItemStack itemStack) {
+        return String.format(
+            "item.%s%s%s",
+            Textures.RESOURCE_PREFIX,
+            Names.Items.GEM,
+            Names.Items.GEM_SUBTYPES[MathHelper
+                .clamp_int(itemStack.getItemDamage(), 0, Names.Items.GEM_SUBTYPES.length - 1)]);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs creativeTab, List list)
-    {
-        for (int meta = 0; meta < Names.Items.GEM_SUBTYPES.length; ++meta)
-        {
+    public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
+        for (int meta = 0; meta < Names.Items.GEM_SUBTYPES.length; ++meta) {
             list.add(new ItemStack(this, 1, meta));
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int meta)
-    {
+    public IIcon getIconFromDamage(int meta) {
         return icons[MathHelper.clamp_int(meta, 0, Names.Items.GEM_SUBTYPES.length - 1)];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         icons = new IIcon[Names.Items.GEM_SUBTYPES.length];
 
-        for (int i = 0; i < Names.Items.GEM_SUBTYPES.length; i++)
-        {
-            icons[i] = iconRegister.registerIcon(Textures.RESOURCE_PREFIX + Names.Items.GEM + Names.Items.GEM_SUBTYPES[i]);
+        for (int i = 0; i < Names.Items.GEM_SUBTYPES.length; i++) {
+            icons[i] = iconRegister
+                .registerIcon(Textures.RESOURCE_PREFIX + Names.Items.GEM + Names.Items.GEM_SUBTYPES[i]);
         }
     }
 }

@@ -1,13 +1,14 @@
 package com.pahimar.ee3.knowledge;
 
-import com.pahimar.ee3.reference.Comparators;
-import com.pahimar.ee3.util.ItemStackUtils;
-import net.minecraft.item.ItemStack;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
+
+import net.minecraft.item.ItemStack;
+
+import com.pahimar.ee3.reference.Comparators;
+import com.pahimar.ee3.util.ItemStackUtils;
 
 public class PlayerKnowledge {
 

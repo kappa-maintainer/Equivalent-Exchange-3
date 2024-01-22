@@ -1,10 +1,11 @@
 package com.pahimar.ee3.api.blacklist;
 
+import java.util.Set;
+
 import com.pahimar.ee3.EquivalentExchange3;
 import com.pahimar.ee3.exchange.WrappedStack;
-import cpw.mods.fml.common.Mod;
 
-import java.util.Set;
+import cpw.mods.fml.common.Mod;
 
 public class BlacklistRegistryProxy {
 
@@ -38,10 +39,11 @@ public class BlacklistRegistryProxy {
 
         if (ee3Mod != null) {
             if (blacklist == Blacklist.KNOWLEDGE) {
-                return EE3Wrapper.ee3mod.getBlacklistRegistry().getKnowledgeBlacklist();
-            }
-            else if (blacklist == Blacklist.EXCHANGE) {
-                return EE3Wrapper.ee3mod.getBlacklistRegistry().getExchangeBlacklist();
+                return EE3Wrapper.ee3mod.getBlacklistRegistry()
+                    .getKnowledgeBlacklist();
+            } else if (blacklist == Blacklist.EXCHANGE) {
+                return EE3Wrapper.ee3mod.getBlacklistRegistry()
+                    .getExchangeBlacklist();
             }
         }
 
@@ -59,7 +61,8 @@ public class BlacklistRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getBlacklistRegistry().isLearnable(object);
+            return EE3Wrapper.ee3mod.getBlacklistRegistry()
+                .isLearnable(object);
         }
 
         return false;
@@ -76,7 +79,8 @@ public class BlacklistRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getBlacklistRegistry().isExchangeable(object);
+            return EE3Wrapper.ee3mod.getBlacklistRegistry()
+                .isExchangeable(object);
         }
 
         return false;
@@ -129,7 +133,8 @@ public class BlacklistRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getBlacklistRegistry().addToBlacklist(object, blacklist);
+            EE3Wrapper.ee3mod.getBlacklistRegistry()
+                .addToBlacklist(object, blacklist);
         }
     }
 
@@ -144,7 +149,8 @@ public class BlacklistRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getBlacklistRegistry().removeFromBlacklist(object, blacklist);
+            EE3Wrapper.ee3mod.getBlacklistRegistry()
+                .removeFromBlacklist(object, blacklist);
         }
     }
 
@@ -152,6 +158,7 @@ public class BlacklistRegistryProxy {
     private static Object ee3Mod;
 
     private static class EE3Wrapper {
+
         private static EquivalentExchange3 ee3mod;
     }
 

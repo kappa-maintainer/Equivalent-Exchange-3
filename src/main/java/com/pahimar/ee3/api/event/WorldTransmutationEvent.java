@@ -7,14 +7,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.world.BlockEvent;
 
-public class WorldTransmutationEvent extends BlockEvent
-{
+public class WorldTransmutationEvent extends BlockEvent {
+
     public final ForgeDirection sideHit;
     public final EntityLiving entityLiving;
     public final ItemStack heldItemStack;
 
-    public WorldTransmutationEvent(int x, int y, int z, World world, Block block, int blockMetaData, ForgeDirection sideHit, EntityLiving entityLiving)
-    {
+    public WorldTransmutationEvent(int x, int y, int z, World world, Block block, int blockMetaData,
+        ForgeDirection sideHit, EntityLiving entityLiving) {
         super(x, y, z, world, block, blockMetaData);
         this.sideHit = sideHit;
         this.entityLiving = entityLiving;
@@ -22,8 +22,7 @@ public class WorldTransmutationEvent extends BlockEvent
     }
 
     @Override
-    public boolean isCancelable()
-    {
+    public boolean isCancelable() {
         return true;
     }
 }

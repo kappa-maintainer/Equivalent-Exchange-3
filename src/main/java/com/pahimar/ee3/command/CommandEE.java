@@ -1,14 +1,15 @@
 package com.pahimar.ee3.command;
 
-import com.google.common.base.Joiner;
-import com.pahimar.ee3.reference.Messages;
-import com.pahimar.ee3.reference.Names;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.base.Joiner;
+import com.pahimar.ee3.reference.Messages;
+import com.pahimar.ee3.reference.Names;
 
 public class CommandEE extends CommandBase {
 
@@ -34,7 +35,8 @@ public class CommandEE extends CommandBase {
 
             for (CommandBase command : modCommands) {
 
-                if (command.getCommandName().equalsIgnoreCase(args[0]) && command.canCommandSenderUseCommand(commandSender)) {
+                if (command.getCommandName()
+                    .equalsIgnoreCase(args[0]) && command.canCommandSenderUseCommand(commandSender)) {
                     found = true;
                     command.processCommand(commandSender, args);
                 }
@@ -42,7 +44,9 @@ public class CommandEE extends CommandBase {
         }
 
         if (!found) {
-            throw new WrongUsageException("Invalid command. Usage: /ee3 " + Joiner.on(" ").join(commands));
+            throw new WrongUsageException(
+                "Invalid command. Usage: /ee3 " + Joiner.on(" ")
+                    .join(commands));
         }
     }
 
@@ -51,10 +55,10 @@ public class CommandEE extends CommandBase {
 
         if (args.length == 1) {
             return getListOfStringsFromIterableMatchingLastWord(args, commands);
-        }
-        else if (args.length >= 2) {
+        } else if (args.length >= 2) {
             for (CommandBase command : modCommands) {
-                if (command.getCommandName().equalsIgnoreCase(args[0])) {
+                if (command.getCommandName()
+                    .equalsIgnoreCase(args[0])) {
                     return command.addTabCompletionOptions(commandSender, args);
                 }
             }

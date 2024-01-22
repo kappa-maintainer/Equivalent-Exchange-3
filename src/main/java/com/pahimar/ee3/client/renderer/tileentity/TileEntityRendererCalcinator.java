@@ -1,57 +1,55 @@
 package com.pahimar.ee3.client.renderer.tileentity;
 
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+
+import org.lwjgl.opengl.GL11;
+
 import com.pahimar.ee3.client.renderer.model.ModelCalcinator;
 import com.pahimar.ee3.client.util.ColorUtils;
 import com.pahimar.ee3.reference.Colors;
 import com.pahimar.ee3.reference.Textures;
 import com.pahimar.ee3.tileentity.TileEntityCalcinator;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityRendererCalcinator extends TileEntitySpecialRenderer
-{
+public class TileEntityRendererCalcinator extends TileEntitySpecialRenderer {
+
     private final ModelCalcinator modelCalcinator = new ModelCalcinator();
 
-    private static float[] getBlendedDustColour(int leftStackSize, int leftStackMeta, int rightStackSize, int rightStackMeta)
-    {
+    private static float[] getBlendedDustColour(int leftStackSize, int leftStackMeta, int rightStackSize,
+        int rightStackMeta) {
         int totalDustStacksSize = leftStackSize + rightStackSize;
 
-        if (totalDustStacksSize > 0)
-        {
-            int leftStackColour = Integer.parseInt(Colors.DUST_COLOURS[MathHelper.clamp_int(leftStackMeta, 0, Colors.DUST_COLOURS.length)], 16);
-            int rightStackColour = Integer.parseInt(Colors.DUST_COLOURS[MathHelper.clamp_int(rightStackMeta, 0, Colors.DUST_COLOURS.length)], 16);
+        if (totalDustStacksSize > 0) {
+            int leftStackColour = Integer
+                .parseInt(Colors.DUST_COLOURS[MathHelper.clamp_int(leftStackMeta, 0, Colors.DUST_COLOURS.length)], 16);
+            int rightStackColour = Integer
+                .parseInt(Colors.DUST_COLOURS[MathHelper.clamp_int(rightStackMeta, 0, Colors.DUST_COLOURS.length)], 16);
 
             float leftStackRatio = leftStackSize * 1f / totalDustStacksSize;
             float rightStackRatio = rightStackSize * 1f / totalDustStacksSize;
 
             float[][] blendedColours = ColorUtils.getFloatBlendedColours(leftStackColour, rightStackColour, 32);
 
-            if (blendedColours.length > 0)
-            {
-                if (Float.compare(leftStackRatio, rightStackRatio) > 0)
-                {
+            if (blendedColours.length > 0) {
+                if (Float.compare(leftStackRatio, rightStackRatio) > 0) {
                     return blendedColours[Math.round((1 - leftStackRatio) * (blendedColours.length - 1))];
-                }
-                else
-                {
+                } else {
                     return blendedColours[Math.round(rightStackRatio * (blendedColours.length - 1))];
                 }
             }
         }
 
-        return new float[]{1F, 1F, 1F};
+        return new float[] { 1F, 1F, 1F };
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float tick)
-    {
-        if (tileEntity instanceof TileEntityCalcinator)
-        {
+    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float tick) {
+        if (tileEntity instanceof TileEntityCalcinator) {
             TileEntityCalcinator tileEntityCalcinator = (TileEntityCalcinator) tileEntity;
 
             GL11.glPushMatrix();
@@ -63,12 +61,9 @@ public class TileEntityRendererCalcinator extends TileEntitySpecialRenderer
             GL11.glRotatef(-90F, 1F, 0F, 0F);
 
             // Bind texture
-            if (tileEntityCalcinator.getState() == 1)
-            {
+            if (tileEntityCalcinator.getState() == 1) {
                 this.bindTexture(Textures.Model.CALCINATOR_ACTIVE);
-            }
-            else
-            {
+            } else {
                 this.bindTexture(Textures.Model.CALCINATOR_IDLE);
             }
 
@@ -77,25 +72,25 @@ public class TileEntityRendererCalcinator extends TileEntitySpecialRenderer
 
             int dustStackSize = tileEntityCalcinator.leftStackSize + tileEntityCalcinator.rightStackSize;
 
-            if (dustStackSize > 0)
-            {
+            if (dustStackSize > 0) {
                 GL11.glPushMatrix();
 
                 // Reverse previous rotation to get back into a workable frame of reference
                 GL11.glRotatef(90F, 1F, 0F, 0F);
                 GL11.glRotatef(-45F, 0F, 1F, 0F);
 
-                float[] dustColour = getBlendedDustColour(tileEntityCalcinator.leftStackSize, tileEntityCalcinator.leftStackMeta, tileEntityCalcinator.rightStackSize, tileEntityCalcinator.rightStackMeta);
+                float[] dustColour = getBlendedDustColour(
+                    tileEntityCalcinator.leftStackSize,
+                    tileEntityCalcinator.leftStackMeta,
+                    tileEntityCalcinator.rightStackSize,
+                    tileEntityCalcinator.rightStackMeta);
 
                 GL11.glColor4f(dustColour[0], dustColour[1], dustColour[2], 1F);
 
-                if (dustStackSize <= 32)
-                {
+                if (dustStackSize <= 32) {
                     GL11.glScalef(0.25F, 0.25F, 0.25F);
                     GL11.glTranslatef(0.0F, 2.20F, -2.1125F);
-                }
-                else if (dustStackSize <= 64)
-                {
+                } else if (dustStackSize <= 64) {
                     GL11.glScalef(0.5F, 0.5F, 0.5F);
                     GL11.glTranslatef(-0.0125F, 0.75F, -0.7125F);
                 }

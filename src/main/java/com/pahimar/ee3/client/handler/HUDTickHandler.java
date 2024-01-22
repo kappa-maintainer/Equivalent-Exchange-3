@@ -1,38 +1,37 @@
 package com.pahimar.ee3.client.handler;
 
-import com.pahimar.ee3.client.util.RenderUtils;
-import com.pahimar.ee3.util.IOverlayItem;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.pahimar.ee3.client.util.RenderUtils;
+import com.pahimar.ee3.util.IOverlayItem;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 @SideOnly(Side.CLIENT)
-public class HUDTickHandler
-{
+public class HUDTickHandler {
+
     @SubscribeEvent
-    public void renderTick(TickEvent.RenderTickEvent event)
-    {
-        if (event.phase == TickEvent.Phase.END)
-        {
-            Minecraft minecraft = FMLClientHandler.instance().getClient();
+    public void renderTick(TickEvent.RenderTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            Minecraft minecraft = FMLClientHandler.instance()
+                .getClient();
             EntityPlayer entityPlayer = minecraft.thePlayer;
 
-            if (entityPlayer != null)
-            {
+            if (entityPlayer != null) {
                 ItemStack currentItemStack = entityPlayer.inventory.getCurrentItem();
-                if (Minecraft.isGuiEnabled() && minecraft.inGameHasFocus)
-                {
-                    if (currentItemStack != null && currentItemStack.getItem() instanceof IOverlayItem)
-                    {
+                if (Minecraft.isGuiEnabled() && minecraft.inGameHasFocus) {
+                    if (currentItemStack != null && currentItemStack.getItem() instanceof IOverlayItem) {
                         renderHUDOverlayItem(minecraft, entityPlayer, currentItemStack);
                     }
                 }
@@ -40,8 +39,7 @@ public class HUDTickHandler
         }
     }
 
-    private static void renderHUDOverlayItem(Minecraft minecraft, EntityPlayer entityPlayer, ItemStack itemStack)
-    {
+    private static void renderHUDOverlayItem(Minecraft minecraft, EntityPlayer entityPlayer, ItemStack itemStack) {
         float overlayScale = 2f;
         float overlayOpacity = 1f;
         GL11.glPushMatrix();
@@ -65,7 +63,14 @@ public class HUDTickHandler
         hudOverlayX = (int) (sr.getScaledWidth() - 16 * overlayScale);
         hudOverlayY = (int) (sr.getScaledHeight() - 16 * overlayScale);
 
-        RenderUtils.renderItemIntoGUI(minecraft.fontRenderer, itemStack, hudOverlayX, hudOverlayY, overlayOpacity, overlayScale, -90);
+        RenderUtils.renderItemIntoGUI(
+            minecraft.fontRenderer,
+            itemStack,
+            hudOverlayX,
+            hudOverlayY,
+            overlayOpacity,
+            overlayScale,
+            -90);
 
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

@@ -1,18 +1,20 @@
 package com.pahimar.ee3.util;
 
+import java.util.Random;
+
+import net.minecraft.item.ItemStack;
+
 import com.pahimar.ee3.api.exchange.EnergyValue;
 import com.pahimar.ee3.api.exchange.EnergyValueRegistryProxy;
 import com.pahimar.ee3.init.ModItems;
-import net.minecraft.item.ItemStack;
 
-import java.util.Random;
+public class CalcinationHelper {
 
-public class CalcinationHelper
-{
     private static Random random = new Random();
 
     public static ItemStack getCalcinationResult(ItemStack itemStack) {
-        EnergyValue dustEnergyValue = EnergyValueRegistryProxy.getEnergyValue(new ItemStack(ModItems.alchemicalDust, 1, 3));
+        EnergyValue dustEnergyValue = EnergyValueRegistryProxy
+            .getEnergyValue(new ItemStack(ModItems.alchemicalDust, 1, 3));
         EnergyValue itemStackEnergyValue = EnergyValueRegistryProxy.getEnergyValue(itemStack);
 
         if (dustEnergyValue != null && itemStackEnergyValue != null) {

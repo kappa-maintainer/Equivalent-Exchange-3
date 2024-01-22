@@ -1,58 +1,50 @@
 package com.pahimar.ee3.tileentity;
 
-import com.pahimar.ee3.network.PacketHandler;
-import com.pahimar.ee3.network.message.MessageTileEntityDummy;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 
-public class TileEntityDummyArray extends TileEntityEE
-{
+import com.pahimar.ee3.network.PacketHandler;
+import com.pahimar.ee3.network.message.MessageTileEntityDummy;
+
+public class TileEntityDummyArray extends TileEntityEE {
+
     private int trueXCoord, trueYCoord, trueZCoord;
     private int ticksSinceSync;
 
-    public TileEntityDummyArray()
-    {
+    public TileEntityDummyArray() {
         super();
     }
 
-    public int getTrueXCoord()
-    {
+    public int getTrueXCoord() {
         return trueXCoord;
     }
 
-    public int getTrueYCoord()
-    {
+    public int getTrueYCoord() {
         return trueYCoord;
     }
 
-    public int getTrueZCoord()
-    {
+    public int getTrueZCoord() {
         return trueZCoord;
     }
 
-    public void setTrueCoords(int trueXCoord, int trueYCoord, int trueZCoord)
-    {
+    public void setTrueCoords(int trueXCoord, int trueYCoord, int trueZCoord) {
         this.trueXCoord = trueXCoord;
         this.trueYCoord = trueYCoord;
         this.trueZCoord = trueZCoord;
     }
 
-    public TileEntityAlchemyArray getAssociatedTileEntity()
-    {
-        if (this.worldObj.getTileEntity(trueXCoord, trueYCoord, trueZCoord) instanceof TileEntityAlchemyArray)
-        {
+    public TileEntityAlchemyArray getAssociatedTileEntity() {
+        if (this.worldObj.getTileEntity(trueXCoord, trueYCoord, trueZCoord) instanceof TileEntityAlchemyArray) {
             return (TileEntityAlchemyArray) this.worldObj.getTileEntity(trueXCoord, trueYCoord, trueZCoord);
         }
 
         return null;
     }
 
-    public int getLightLevel()
-    {
+    public int getLightLevel() {
         TileEntityAlchemyArray tileEntityAlchemyArray = getAssociatedTileEntity();
 
-        if (tileEntityAlchemyArray != null)
-        {
+        if (tileEntityAlchemyArray != null) {
             return tileEntityAlchemyArray.getLightLevel();
         }
 
@@ -60,14 +52,12 @@ public class TileEntityDummyArray extends TileEntityEE
     }
 
     @Override
-    public void updateEntity()
-    {
+    public void updateEntity() {
         super.updateEntity();
 
-        if (++ticksSinceSync % 10 == 0)
-        {
-            if (!worldObj.isRemote && !(worldObj.getTileEntity(trueXCoord, trueYCoord, trueZCoord) instanceof TileEntityAlchemyArray))
-            {
+        if (++ticksSinceSync % 10 == 0) {
+            if (!worldObj.isRemote
+                && !(worldObj.getTileEntity(trueXCoord, trueYCoord, trueZCoord) instanceof TileEntityAlchemyArray)) {
                 this.invalidate();
                 worldObj.setBlockToAir(xCoord, yCoord, zCoord);
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -76,14 +66,12 @@ public class TileEntityDummyArray extends TileEntityEE
     }
 
     @Override
-    public Packet getDescriptionPacket()
-    {
+    public Packet getDescriptionPacket() {
         return PacketHandler.INSTANCE.getPacketFrom(new MessageTileEntityDummy(this));
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound)
-    {
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
 
         this.trueXCoord = nbtTagCompound.getInteger("trueXCoord");
@@ -92,8 +80,7 @@ public class TileEntityDummyArray extends TileEntityEE
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound)
-    {
+    public void writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
         nbtTagCompound.setInteger("trueXCoord", trueXCoord);

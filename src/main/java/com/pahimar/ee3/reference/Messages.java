@@ -44,61 +44,122 @@ public final class Messages {
         public static final String NO_ITEM = COMMAND_PREFIX + "no-item.error";
 
         public static final String SET_ENERGY_VALUE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ENERGY_VALUE + ".usage";
-        public static final String SET_ENERGY_VALUE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ENERGY_VALUE + ".success";
+        public static final String SET_ENERGY_VALUE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ENERGY_VALUE
+            + ".success";
 
-        public static final String SET_ENERGY_VALUE_CURRENT_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.SET_ENERGY_VALUE_CURRENT_ITEM + ".usage";
-        public static final String SET_ENERGY_VALUE_CURRENT_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ENERGY_VALUE_CURRENT_ITEM + ".success";
+        public static final String SET_ENERGY_VALUE_CURRENT_ITEM_USAGE = COMMAND_PREFIX
+            + Names.Commands.SET_ENERGY_VALUE_CURRENT_ITEM
+            + ".usage";
+        public static final String SET_ENERGY_VALUE_CURRENT_ITEM_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ENERGY_VALUE_CURRENT_ITEM
+            + ".success";
 
-        public static final String REGEN_ENERGY_VALUES_USAGE = COMMAND_PREFIX + Names.Commands.REGEN_ENERGY_VALUES + ".usage";
-        public static final String REGEN_ENERGY_VALUES_SUCCESS = COMMAND_PREFIX + Names.Commands.REGEN_ENERGY_VALUES + ".success";
-        public static final String REGEN_ENERGY_VALUES_DENIED = COMMAND_PREFIX + Names.Commands.REGEN_ENERGY_VALUES + ".denied";
+        public static final String REGEN_ENERGY_VALUES_USAGE = COMMAND_PREFIX + Names.Commands.REGEN_ENERGY_VALUES
+            + ".usage";
+        public static final String REGEN_ENERGY_VALUES_SUCCESS = COMMAND_PREFIX + Names.Commands.REGEN_ENERGY_VALUES
+            + ".success";
+        public static final String REGEN_ENERGY_VALUES_DENIED = COMMAND_PREFIX + Names.Commands.REGEN_ENERGY_VALUES
+            + ".denied";
 
-        public static final String SYNC_ENERGY_VALUES_USAGE = COMMAND_PREFIX + Names.Commands.SYNC_ENERGY_VALUES + ".usage";
-        public static final String SYNC_ENERGY_VALUES_SUCCESS = COMMAND_PREFIX + Names.Commands.SYNC_ENERGY_VALUES + ".success";
-        public static final String SYNC_ENERGY_VALUES_DENIED = COMMAND_PREFIX + Names.Commands.SYNC_ENERGY_VALUES + ".denied";
+        public static final String SYNC_ENERGY_VALUES_USAGE = COMMAND_PREFIX + Names.Commands.SYNC_ENERGY_VALUES
+            + ".usage";
+        public static final String SYNC_ENERGY_VALUES_SUCCESS = COMMAND_PREFIX + Names.Commands.SYNC_ENERGY_VALUES
+            + ".success";
+        public static final String SYNC_ENERGY_VALUES_DENIED = COMMAND_PREFIX + Names.Commands.SYNC_ENERGY_VALUES
+            + ".denied";
 
-        public static final String PLAYER_LEARN_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_LEARN_ITEM + ".usage";
-        public static final String PLAYER_LEARN_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_LEARN_ITEM + ".success";
+        public static final String PLAYER_LEARN_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_LEARN_ITEM
+            + ".usage";
+        public static final String PLAYER_LEARN_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_LEARN_ITEM
+            + ".success";
 
-        public static final String PLAYER_LEARN_CURRENT_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_LEARN_CURRENT_ITEM + ".usage";
-        public static final String PLAYER_LEARN_CURRENT_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_LEARN_CURRENT_ITEM + ".success";
+        public static final String PLAYER_LEARN_CURRENT_ITEM_USAGE = COMMAND_PREFIX
+            + Names.Commands.PLAYER_LEARN_CURRENT_ITEM
+            + ".usage";
+        public static final String PLAYER_LEARN_CURRENT_ITEM_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.PLAYER_LEARN_CURRENT_ITEM
+            + ".success";
 
-        public static final String PLAYER_FORGET_EVERYTHING_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_EVERYTHING + ".usage";
-        public static final String PLAYER_FORGET_EVERYTHING_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_EVERYTHING + ".success";
+        public static final String PLAYER_FORGET_EVERYTHING_USAGE = COMMAND_PREFIX
+            + Names.Commands.PLAYER_FORGET_EVERYTHING
+            + ".usage";
+        public static final String PLAYER_FORGET_EVERYTHING_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.PLAYER_FORGET_EVERYTHING
+            + ".success";
 
-        public static final String PLAYER_FORGET_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_ITEM + ".usage";
-        public static final String PLAYER_FORGET_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_ITEM + ".success";
+        public static final String PLAYER_FORGET_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_ITEM
+            + ".usage";
+        public static final String PLAYER_FORGET_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_ITEM
+            + ".success";
 
-        public static final String PLAYER_FORGET_CURRENT_ITEM_USAGE = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_CURRENT_ITEM + ".usage";
-        public static final String PLAYER_FORGET_CURRENT_ITEM_SUCCESS = COMMAND_PREFIX + Names.Commands.PLAYER_FORGET_CURRENT_ITEM + ".success";
+        public static final String PLAYER_FORGET_CURRENT_ITEM_USAGE = COMMAND_PREFIX
+            + Names.Commands.PLAYER_FORGET_CURRENT_ITEM
+            + ".usage";
+        public static final String PLAYER_FORGET_CURRENT_ITEM_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.PLAYER_FORGET_CURRENT_ITEM
+            + ".success";
 
-        public static final String SET_ITEM_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE + ".usage";
-        public static final String SET_ITEM_LEARNABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE + ".success";
+        public static final String SET_ITEM_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE
+            + ".usage";
+        public static final String SET_ITEM_LEARNABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE
+            + ".success";
 
-        public static final String SET_CURRENT_ITEM_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE + ".usage";
-        public static final String SET_CURRENT_ITEM_LEARNABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE + ".success";
-        public static final String SET_CURRENT_ITEM_LEARNABLE_NO_EFFECT = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE + ".no-effect";
+        public static final String SET_CURRENT_ITEM_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_LEARNABLE
+            + ".usage";
+        public static final String SET_CURRENT_ITEM_LEARNABLE_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_LEARNABLE
+            + ".success";
+        public static final String SET_CURRENT_ITEM_LEARNABLE_NO_EFFECT = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_LEARNABLE
+            + ".no-effect";
 
-        public static final String SET_ITEM_NOT_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_LEARNABLE + ".usage";
-        public static final String SET_ITEM_NOT_LEARNABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_LEARNABLE + ".success";
+        public static final String SET_ITEM_NOT_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_LEARNABLE
+            + ".usage";
+        public static final String SET_ITEM_NOT_LEARNABLE_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_LEARNABLE
+            + ".success";
 
-        public static final String SET_CURRENT_ITEM_NOT_LEARNABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_LEARNABLE + ".usage";
-        public static final String SET_CURRENT_ITEM_NOT_LEARNABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_LEARNABLE + ".success";
-        public static final String SET_CURRENT_ITEM_NOT_LEARNABLE_NO_EFFECT = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_LEARNABLE + ".no-effect";
+        public static final String SET_CURRENT_ITEM_NOT_LEARNABLE_USAGE = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_LEARNABLE
+            + ".usage";
+        public static final String SET_CURRENT_ITEM_NOT_LEARNABLE_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_LEARNABLE
+            + ".success";
+        public static final String SET_CURRENT_ITEM_NOT_LEARNABLE_NO_EFFECT = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_LEARNABLE
+            + ".no-effect";
 
-        public static final String SET_ITEM_RECOVERABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE + ".usage";
-        public static final String SET_ITEM_RECOVERABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE + ".success";
+        public static final String SET_ITEM_RECOVERABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE
+            + ".usage";
+        public static final String SET_ITEM_RECOVERABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE
+            + ".success";
 
-        public static final String SET_CURRENT_ITEM_RECOVERABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE + ".usage";
-        public static final String SET_CURRENT_ITEM_RECOVERABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE + ".success";
-        public static final String SET_CURRENT_ITEM_RECOVERABLE_NO_EFFECT = COMMAND_PREFIX + Names.Commands.SET_ITEM_RECOVERABLE + ".no-effect";
+        public static final String SET_CURRENT_ITEM_RECOVERABLE_USAGE = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_RECOVERABLE
+            + ".usage";
+        public static final String SET_CURRENT_ITEM_RECOVERABLE_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_RECOVERABLE
+            + ".success";
+        public static final String SET_CURRENT_ITEM_RECOVERABLE_NO_EFFECT = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_RECOVERABLE
+            + ".no-effect";
 
-        public static final String SET_ITEM_NOT_RECOVERABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_RECOVERABLE + ".usage";
-        public static final String SET_ITEM_NOT_RECOVERABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_RECOVERABLE + ".success";
+        public static final String SET_ITEM_NOT_RECOVERABLE_USAGE = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_RECOVERABLE
+            + ".usage";
+        public static final String SET_ITEM_NOT_RECOVERABLE_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_RECOVERABLE
+            + ".success";
 
-        public static final String SET_CURRENT_ITEM_NOT_RECOVERABLE_USAGE = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_RECOVERABLE + ".usage";
-        public static final String SET_CURRENT_ITEM_NOT_RECOVERABLE_SUCCESS = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_RECOVERABLE + ".success";
-        public static final String SET_CURRENT_ITEM_NOT_RECOVERABLE_NO_EFFECT = COMMAND_PREFIX + Names.Commands.SET_ITEM_NOT_RECOVERABLE + ".no-effect";
+        public static final String SET_CURRENT_ITEM_NOT_RECOVERABLE_USAGE = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_RECOVERABLE
+            + ".usage";
+        public static final String SET_CURRENT_ITEM_NOT_RECOVERABLE_SUCCESS = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_RECOVERABLE
+            + ".success";
+        public static final String SET_CURRENT_ITEM_NOT_RECOVERABLE_NO_EFFECT = COMMAND_PREFIX
+            + Names.Commands.SET_ITEM_NOT_RECOVERABLE
+            + ".no-effect";
 
         public static final String RUN_TEST_USAGE = COMMAND_PREFIX + Names.Commands.RUN_TEST + ".usage";
         public static final String RUN_TESTS_SUCCESS = COMMAND_PREFIX + Names.Commands.RUN_TEST + ".success";

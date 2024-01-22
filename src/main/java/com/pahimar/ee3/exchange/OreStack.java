@@ -1,13 +1,14 @@
 package com.pahimar.ee3.exchange;
 
-import com.pahimar.ee3.reference.Comparators;
-import com.pahimar.ee3.util.FilterUtils;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.oredict.OreDictionary;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.oredict.OreDictionary;
+
+import com.pahimar.ee3.reference.Comparators;
+import com.pahimar.ee3.util.FilterUtils;
 
 public final class OreStack implements Comparable<OreStack> {
 
@@ -19,27 +20,22 @@ public final class OreStack implements Comparable<OreStack> {
             if (oreStack2 != null && oreStack2.oreName != null) {
                 if (oreStack1.oreName.equalsIgnoreCase(oreStack2.oreName)) {
                     return oreStack1.stackSize - oreStack2.stackSize;
-                }
-                else {
+                } else {
                     return oreStack1.oreName.compareToIgnoreCase(oreStack2.oreName);
                 }
-            }
-            else {
+            } else {
                 return -1;
             }
-        }
-        else {
+        } else {
             if (oreStack2 != null) {
                 return 1;
-            }
-            else {
+            } else {
                 return 0;
             }
         }
     };
 
-    private OreStack() {
-    }
+    private OreStack() {}
 
     public OreStack(String oreName) {
         this(oreName, 1);
@@ -73,7 +69,8 @@ public final class OreStack implements Comparable<OreStack> {
     public static OreStack getOreStackFrom(Collection<?> objects) {
 
         for (String oreName : OreDictionary.getOreNames()) {
-            if (Comparators.ITEM_STACK_COLLECTION_COMPARATOR.compare(FilterUtils.filterForItemStacks(objects), OreDictionary.getOres(oreName)) == 0) {
+            if (Comparators.ITEM_STACK_COLLECTION_COMPARATOR
+                .compare(FilterUtils.filterForItemStacks(objects), OreDictionary.getOres(oreName)) == 0) {
                 return new OreStack(oreName, 1);
             }
         }

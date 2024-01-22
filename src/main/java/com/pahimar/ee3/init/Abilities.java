@@ -1,10 +1,11 @@
 package com.pahimar.ee3.init;
 
-import com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy;
-import com.pahimar.ee3.exchange.OreStack;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy;
+import com.pahimar.ee3.exchange.OreStack;
 
 public class Abilities {
 
@@ -12,7 +13,8 @@ public class Abilities {
 
         for (String oreName : OreDictionary.getOreNames()) {
             if (oreName.startsWith("ore")) {
-                OreDictionary.getOres(oreName).forEach(BlacklistRegistryProxy::setAsNotLearnable);
+                OreDictionary.getOres(oreName)
+                    .forEach(BlacklistRegistryProxy::setAsNotLearnable);
                 BlacklistRegistryProxy.setAsNotLearnable(new OreStack(oreName));
             }
         }

@@ -1,28 +1,27 @@
 package com.pahimar.ee3.nei;
 
-import codechicken.nei.api.API;
-import codechicken.nei.api.IConfigureNEI;
-import com.pahimar.ee3.init.ModBlocks;
-import com.pahimar.ee3.reference.Reference;
 import net.minecraft.item.ItemStack;
 
-public class NEIConfig implements IConfigureNEI
-{
+import com.pahimar.ee3.init.ModBlocks;
+import com.pahimar.ee3.reference.Reference;
+
+import codechicken.nei.api.API;
+import codechicken.nei.api.IConfigureNEI;
+
+public class NEIConfig implements IConfigureNEI {
+
     @Override
-    public String getName()
-    {
+    public String getName() {
         return Reference.MOD_NAME;
     }
 
     @Override
-    public String getVersion()
-    {
+    public String getVersion() {
         return Reference.MOD_VERSION;
     }
 
     @Override
-    public void loadConfig()
-    {
+    public void loadConfig() {
         AludelRecipeHandler aludelRecipeHandler = new AludelRecipeHandler();
 
         API.registerRecipeHandler(aludelRecipeHandler);

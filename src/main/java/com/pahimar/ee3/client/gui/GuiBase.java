@@ -1,18 +1,26 @@
 package com.pahimar.ee3.client.gui;
 
-import com.pahimar.ee3.client.gui.component.GuiComponent;
-import com.pahimar.ee3.client.util.RenderUtils;
-import com.pahimar.repackage.cofh.lib.util.helpers.StringHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
-import java.util.*;
+import com.pahimar.ee3.client.gui.component.GuiComponent;
+import com.pahimar.ee3.client.util.RenderUtils;
+import com.pahimar.repackage.cofh.lib.util.helpers.StringHelper;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiBase extends GuiContainer {
@@ -284,11 +292,13 @@ public abstract class GuiBase extends GuiContainer {
         return this.isMouseOverSlot(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, rawMouseX, rawMouseY);
     }
 
-
-    protected boolean isMouseOverSlot(int slotPositionX, int slotPositionY, int slotWidth, int slotHeight, int rawMouseX, int rawMouseY) {
+    protected boolean isMouseOverSlot(int slotPositionX, int slotPositionY, int slotWidth, int slotHeight,
+        int rawMouseX, int rawMouseY) {
         rawMouseX -= getGuiPositionX();
         rawMouseY -= getGuiPositionX();
-        return (rawMouseX >= slotPositionX - 1) && (rawMouseX < slotPositionX + slotWidth + 1) && (rawMouseY >= slotPositionY - 1) && (rawMouseY < slotPositionY + slotHeight + 1);
+        return (rawMouseX >= slotPositionX - 1) && (rawMouseX < slotPositionX + slotWidth + 1)
+            && (rawMouseY >= slotPositionY - 1)
+            && (rawMouseY < slotPositionY + slotHeight + 1);
     }
 
     @Override
@@ -308,7 +318,11 @@ public abstract class GuiBase extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int rawMouseX, int rawMouseY) {
         // Draw text
         if (shouldDrawTitle && title != null) {
-            getFontRenderer().drawString(StringHelper.localize(title), RenderUtils.getCenteredTextOffset(getFontRenderer(), StringHelper.localize(title), getGuiWidth()), 6, 0x404040);
+            getFontRenderer().drawString(
+                StringHelper.localize(title),
+                RenderUtils.getCenteredTextOffset(getFontRenderer(), StringHelper.localize(title), getGuiWidth()),
+                6,
+                0x404040);
         }
 
         // Draw components

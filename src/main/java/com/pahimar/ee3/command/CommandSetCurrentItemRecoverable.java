@@ -1,8 +1,7 @@
 package com.pahimar.ee3.command;
 
-import com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy;
-import com.pahimar.ee3.reference.Messages;
-import com.pahimar.ee3.reference.Names;
+import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -10,7 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 
-import java.util.List;
+import com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy;
+import com.pahimar.ee3.reference.Messages;
+import com.pahimar.ee3.reference.Names;
 
 public class CommandSetCurrentItemRecoverable extends CommandBase {
 
@@ -37,13 +38,16 @@ public class CommandSetCurrentItemRecoverable extends CommandBase {
         if (itemStack != null) {
             if (!BlacklistRegistryProxy.isExchangeable(itemStack)) {
                 BlacklistRegistryProxy.setAsExchangeable(itemStack);
-                func_152373_a(commandSender, this, Messages.Commands.SET_CURRENT_ITEM_RECOVERABLE_SUCCESS, new Object[]{commandSender.getCommandSenderName(), itemStack.func_151000_E()});
+                func_152373_a(
+                    commandSender,
+                    this,
+                    Messages.Commands.SET_CURRENT_ITEM_RECOVERABLE_SUCCESS,
+                    new Object[] { commandSender.getCommandSenderName(), itemStack.func_151000_E() });
+            } else {
+                commandSender.addChatMessage(
+                    new ChatComponentTranslation(Messages.Commands.SET_CURRENT_ITEM_RECOVERABLE_NO_EFFECT, itemStack));
             }
-            else {
-                commandSender.addChatMessage(new ChatComponentTranslation(Messages.Commands.SET_CURRENT_ITEM_RECOVERABLE_NO_EFFECT, itemStack));
-            }
-        }
-        else {
+        } else {
             throw new WrongUsageException(Messages.Commands.NO_ITEM);
         }
     }

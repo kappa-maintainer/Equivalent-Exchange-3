@@ -1,12 +1,13 @@
 package com.pahimar.ee3.util;
 
-import com.pahimar.ee3.reference.ToolMode;
-import net.minecraft.item.ItemStack;
-
 import java.util.List;
 
-public interface IModalTool
-{
+import net.minecraft.item.ItemStack;
+
+import com.pahimar.ee3.reference.ToolMode;
+
+public interface IModalTool {
+
     public abstract List<ToolMode> getAvailableToolModes();
 
     public abstract ToolMode getCurrentToolMode(ItemStack itemStack);

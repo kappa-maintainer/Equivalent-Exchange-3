@@ -1,13 +1,14 @@
 package com.pahimar.ee3.api.exchange;
 
-import com.pahimar.ee3.EquivalentExchange3;
-import com.pahimar.ee3.exchange.WrappedStack;
-import cpw.mods.fml.common.Mod;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import com.pahimar.ee3.EquivalentExchange3;
+import com.pahimar.ee3.exchange.WrappedStack;
+
+import cpw.mods.fml.common.Mod;
 
 public final class EnergyValueRegistryProxy {
 
@@ -32,21 +33,21 @@ public final class EnergyValueRegistryProxy {
 
         if (ee3Mod != null) {
             if (phase == Phase.PRE_ASSIGNMENT || phase == Phase.PRE_CALCULATION) {
-                EE3Wrapper.ee3mod.getEnergyValueRegistry().getPreCalculationStackValueMap();
-            }
-            else if (phase == Phase.POST_ASSIGNMENT || phase == Phase.POST_CALCULATION) {
-                EE3Wrapper.ee3mod.getEnergyValueRegistry().getPostCalculationStackValueMap();
-            }
-            else if (phase == Phase.ALL) {
-                EE3Wrapper.ee3mod.getEnergyValueRegistry().getEnergyValues();
+                EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                    .getPreCalculationStackValueMap();
+            } else if (phase == Phase.POST_ASSIGNMENT || phase == Phase.POST_CALCULATION) {
+                EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                    .getPostCalculationStackValueMap();
+            } else if (phase == Phase.ALL) {
+                EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                    .getEnergyValues();
             }
         }
 
         return null;
     }
 
-    public static boolean hasEnergyValue(Object object)
-    {
+    public static boolean hasEnergyValue(Object object) {
         return hasEnergyValue(object, false);
     }
 
@@ -55,7 +56,8 @@ public final class EnergyValueRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getEnergyValueRegistry().hasEnergyValue(object, strict);
+            return EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                .hasEnergyValue(object, strict);
         }
 
         return false;
@@ -70,7 +72,8 @@ public final class EnergyValueRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getEnergyValueRegistry().getEnergyValue(object, strict);
+            return EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                .getEnergyValue(object, strict);
         }
 
         return null;
@@ -85,7 +88,8 @@ public final class EnergyValueRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getEnergyValueRegistry().getEnergyValueForStack(object, strict);
+            return EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                .getEnergyValueForStack(object, strict);
         }
 
         return null;
@@ -100,7 +104,9 @@ public final class EnergyValueRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return new ArrayList<>(EE3Wrapper.ee3mod.getEnergyValueRegistry().getStacksInRange(start, finish));
+            return new ArrayList<>(
+                EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                    .getStacksInRange(start, finish));
         }
 
         return Collections.EMPTY_LIST;
@@ -212,11 +218,13 @@ public final class EnergyValueRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getEnergyValueRegistry().setEnergyValue(object, energyValue, phase);
+            EE3Wrapper.ee3mod.getEnergyValueRegistry()
+                .setEnergyValue(object, energyValue, phase);
         }
     }
 
     private static class EE3Wrapper {
+
         private static EquivalentExchange3 ee3mod;
     }
 
@@ -228,11 +236,14 @@ public final class EnergyValueRegistryProxy {
     }
 
     public enum Phase {
-        @Deprecated PRE_ASSIGNMENT,
+        @Deprecated
+        PRE_ASSIGNMENT,
         PRE_CALCULATION,
-        @Deprecated POST_ASSIGNMENT,
+        @Deprecated
+        POST_ASSIGNMENT,
         POST_CALCULATION,
-        @Deprecated RUNTIME,
+        @Deprecated
+        RUNTIME,
         ALL
     }
 }

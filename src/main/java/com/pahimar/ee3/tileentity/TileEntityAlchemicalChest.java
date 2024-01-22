@@ -1,17 +1,18 @@
 package com.pahimar.ee3.tileentity;
 
-import com.pahimar.ee3.init.ModBlocks;
-import com.pahimar.ee3.inventory.ContainerAlchemicalChest;
-import com.pahimar.ee3.reference.Names;
-import com.pahimar.ee3.reference.Sounds;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class TileEntityAlchemicalChest extends TileEntityEE implements IInventory
-{
+import com.pahimar.ee3.init.ModBlocks;
+import com.pahimar.ee3.inventory.ContainerAlchemicalChest;
+import com.pahimar.ee3.reference.Names;
+import com.pahimar.ee3.reference.Sounds;
+
+public class TileEntityAlchemicalChest extends TileEntityEE implements IInventory {
+
     /**
      * The current angle of the chest lid (between 0 and 1)
      */
@@ -37,52 +38,38 @@ public class TileEntityAlchemicalChest extends TileEntityEE implements IInventor
      */
     private ItemStack[] inventory;
 
-    public TileEntityAlchemicalChest(int metaData)
-    {
+    public TileEntityAlchemicalChest(int metaData) {
         super();
         this.state = (byte) metaData;
 
-        if (metaData == 0)
-        {
+        if (metaData == 0) {
             inventory = new ItemStack[ContainerAlchemicalChest.SMALL_INVENTORY_SIZE];
-        }
-        else if (metaData == 1)
-        {
+        } else if (metaData == 1) {
             inventory = new ItemStack[ContainerAlchemicalChest.MEDIUM_INVENTORY_SIZE];
-        }
-        else if (metaData == 2)
-        {
+        } else if (metaData == 2) {
             inventory = new ItemStack[ContainerAlchemicalChest.LARGE_INVENTORY_SIZE];
         }
     }
 
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return inventory.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slotIndex)
-    {
+    public ItemStack getStackInSlot(int slotIndex) {
         return inventory[slotIndex];
     }
 
     @Override
-    public ItemStack decrStackSize(int slotIndex, int decrementAmount)
-    {
+    public ItemStack decrStackSize(int slotIndex, int decrementAmount) {
         ItemStack itemStack = getStackInSlot(slotIndex);
-        if (itemStack != null)
-        {
-            if (itemStack.stackSize <= decrementAmount)
-            {
+        if (itemStack != null) {
+            if (itemStack.stackSize <= decrementAmount) {
                 setInventorySlotContents(slotIndex, null);
-            }
-            else
-            {
+            } else {
                 itemStack = itemStack.splitStack(decrementAmount);
-                if (itemStack.stackSize == 0)
-                {
+                if (itemStack.stackSize == 0) {
                     setInventorySlotContents(slotIndex, null);
                 }
             }
@@ -92,49 +79,39 @@ public class TileEntityAlchemicalChest extends TileEntityEE implements IInventor
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slotIndex)
-    {
-        if (inventory[slotIndex] != null)
-        {
+    public ItemStack getStackInSlotOnClosing(int slotIndex) {
+        if (inventory[slotIndex] != null) {
             ItemStack itemStack = inventory[slotIndex];
             inventory[slotIndex] = null;
             return itemStack;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void setInventorySlotContents(int slotIndex, ItemStack itemStack)
-    {
+    public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
         inventory[slotIndex] = itemStack;
 
-        if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit())
-        {
+        if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit()) {
             itemStack.stackSize = this.getInventoryStackLimit();
         }
-
 
         this.markDirty();
     }
 
     @Override
-    public String getInventoryName()
-    {
+    public String getInventoryName() {
         return this.hasCustomName() ? this.getCustomName() : Names.Containers.ALCHEMICAL_CHEST;
     }
 
     @Override
-    public boolean hasCustomInventoryName()
-    {
+    public boolean hasCustomInventoryName() {
         return this.hasCustomName();
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
@@ -144,28 +121,26 @@ public class TileEntityAlchemicalChest extends TileEntityEE implements IInventor
      * @param entityplayer The player we are checking to see if they can use this chest
      */
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityplayer)
-    {
-        return this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityplayer.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64D;
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+        return this.worldObj.getTileEntity(xCoord, yCoord, zCoord) == this
+            && entityplayer.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D)
+                <= 64D;
     }
 
     @Override
-    public void openInventory()
-    {
+    public void openInventory() {
         ++numUsingPlayers;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.alchemicalChest, 1, numUsingPlayers);
     }
 
     @Override
-    public void closeInventory()
-    {
+    public void closeInventory() {
         --numUsingPlayers;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.alchemicalChest, 1, numUsingPlayers);
     }
 
     @Override
-    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
-    {
+    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack) {
         return true;
     }
 
@@ -174,12 +149,10 @@ public class TileEntityAlchemicalChest extends TileEntityEE implements IInventor
      * ticks and creates a new spawn inside its implementation.
      */
     @Override
-    public void updateEntity()
-    {
+    public void updateEntity() {
         super.updateEntity();
 
-        if (++ticksSinceSync % 20 * 4 == 0)
-        {
+        if (++ticksSinceSync % 20 * 4 == 0) {
             worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.alchemicalChest, 1, numUsingPlayers);
         }
 
@@ -187,40 +160,44 @@ public class TileEntityAlchemicalChest extends TileEntityEE implements IInventor
         float angleIncrement = 0.1F;
         double adjustedXCoord, adjustedZCoord;
 
-        if (numUsingPlayers > 0 && lidAngle == 0.0F)
-        {
+        if (numUsingPlayers > 0 && lidAngle == 0.0F) {
             adjustedXCoord = xCoord + 0.5D;
             adjustedZCoord = zCoord + 0.5D;
-            worldObj.playSoundEffect(adjustedXCoord, yCoord + 0.5D, adjustedZCoord, Sounds.CHEST_OPEN, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            worldObj.playSoundEffect(
+                adjustedXCoord,
+                yCoord + 0.5D,
+                adjustedZCoord,
+                Sounds.CHEST_OPEN,
+                0.5F,
+                worldObj.rand.nextFloat() * 0.1F + 0.9F);
         }
 
-        if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
-        {
+        if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F) {
             float var8 = lidAngle;
 
-            if (numUsingPlayers > 0)
-            {
+            if (numUsingPlayers > 0) {
                 lidAngle += angleIncrement;
-            }
-            else
-            {
+            } else {
                 lidAngle -= angleIncrement;
             }
 
-            if (lidAngle > 1.0F)
-            {
+            if (lidAngle > 1.0F) {
                 lidAngle = 1.0F;
             }
 
-            if (lidAngle < 0.5F && var8 >= 0.5F)
-            {
+            if (lidAngle < 0.5F && var8 >= 0.5F) {
                 adjustedXCoord = xCoord + 0.5D;
                 adjustedZCoord = zCoord + 0.5D;
-                worldObj.playSoundEffect(adjustedXCoord, yCoord + 0.5D, adjustedZCoord, Sounds.CHEST_CLOSE, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                worldObj.playSoundEffect(
+                    adjustedXCoord,
+                    yCoord + 0.5D,
+                    adjustedZCoord,
+                    Sounds.CHEST_CLOSE,
+                    0.5F,
+                    worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
 
-            if (lidAngle < 0.0F)
-            {
+            if (lidAngle < 0.0F) {
                 lidAngle = 0.0F;
             }
         }
@@ -230,49 +207,39 @@ public class TileEntityAlchemicalChest extends TileEntityEE implements IInventor
      * Called when a client event is received with the event number and argument, see World.sendClientEvent
      */
     @Override
-    public boolean receiveClientEvent(int eventID, int numUsingPlayers)
-    {
-        if (eventID == 1)
-        {
+    public boolean receiveClientEvent(int eventID, int numUsingPlayers) {
+        if (eventID == 1) {
             this.numUsingPlayers = numUsingPlayers;
             return true;
-        }
-        else
-        {
+        } else {
             return super.receiveClientEvent(eventID, numUsingPlayers);
         }
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound)
-    {
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
 
         // Read in the ItemStacks in the inventory from NBT
         NBTTagList tagList = nbtTagCompound.getTagList(Names.NBT.ITEMS, 10);
         inventory = new ItemStack[this.getSizeInventory()];
-        for (int i = 0; i < tagList.tagCount(); ++i)
-        {
+        for (int i = 0; i < tagList.tagCount(); ++i) {
             NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
             byte slotIndex = tagCompound.getByte("Slot");
-            if (slotIndex >= 0 && slotIndex < inventory.length)
-            {
+            if (slotIndex >= 0 && slotIndex < inventory.length) {
                 inventory[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
             }
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound)
-    {
+    public void writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
         // Write the ItemStacks in the inventory to NBT
         NBTTagList tagList = new NBTTagList();
-        for (int currentIndex = 0; currentIndex < inventory.length; ++currentIndex)
-        {
-            if (inventory[currentIndex] != null)
-            {
+        for (int currentIndex = 0; currentIndex < inventory.length; ++currentIndex) {
+            if (inventory[currentIndex] != null) {
                 NBTTagCompound tagCompound = new NBTTagCompound();
                 tagCompound.setByte("Slot", (byte) currentIndex);
                 inventory[currentIndex].writeToNBT(tagCompound);

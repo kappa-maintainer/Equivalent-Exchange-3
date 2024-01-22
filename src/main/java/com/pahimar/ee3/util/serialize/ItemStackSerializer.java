@@ -1,6 +1,7 @@
 package com.pahimar.ee3.util.serialize;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
@@ -8,7 +9,14 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.lang.reflect.Type;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeserializer<ItemStack> {
 
@@ -17,7 +25,8 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
     private static final String TAG_COMPOUND = "tagCompound";
 
     @Override
-    public ItemStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public ItemStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+        throws JsonParseException {
 
         if (json.isJsonObject()) {
             JsonObject jsonObject = json.getAsJsonObject();
@@ -26,28 +35,33 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
             int metaValue = 0;
             NBTTagCompound tagCompound = null;
 
-            if (jsonObject.has(NAME) && jsonObject.get(NAME).isJsonPrimitive()) {
-                name = jsonObject.getAsJsonPrimitive(NAME).getAsString();
+            if (jsonObject.has(NAME) && jsonObject.get(NAME)
+                .isJsonPrimitive()) {
+                name = jsonObject.getAsJsonPrimitive(NAME)
+                    .getAsString();
             }
 
-            if (jsonObject.has(META_VALUE) && jsonObject.get(META_VALUE).isJsonPrimitive()) {
+            if (jsonObject.has(META_VALUE) && jsonObject.get(META_VALUE)
+                .isJsonPrimitive()) {
                 try {
-                    metaValue = jsonObject.getAsJsonPrimitive(META_VALUE).getAsInt();
-                }
-                catch (NumberFormatException e) {
+                    metaValue = jsonObject.getAsJsonPrimitive(META_VALUE)
+                        .getAsInt();
+                } catch (NumberFormatException e) {
                     // TODO Logging
                 }
             }
 
-            if (jsonObject.has(TAG_COMPOUND) && jsonObject.get(TAG_COMPOUND).isJsonPrimitive()) {
+            if (jsonObject.has(TAG_COMPOUND) && jsonObject.get(TAG_COMPOUND)
+                .isJsonPrimitive()) {
 
                 try {
-                    NBTBase nbtBase = JsonToNBT.func_150315_a(jsonObject.getAsJsonPrimitive(TAG_COMPOUND).getAsString());
+                    NBTBase nbtBase = JsonToNBT.func_150315_a(
+                        jsonObject.getAsJsonPrimitive(TAG_COMPOUND)
+                            .getAsString());
                     if (nbtBase instanceof NBTTagCompound) {
                         tagCompound = (NBTTagCompound) nbtBase;
                     }
-                }
-                catch (NBTException e) {
+                } catch (NBTException e) {
                     // TODO Logging
                 }
             }
@@ -78,8 +92,7 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
 
             if (Item.itemRegistry.getNameForObject(src.getItem()) != null) {
                 jsonObject.addProperty(NAME, Item.itemRegistry.getNameForObject(src.getItem()));
-            }
-            else {
+            } else {
                 return JsonNull.INSTANCE;
             }
 
@@ -88,7 +101,10 @@ public class ItemStackSerializer implements JsonSerializer<ItemStack>, JsonDeser
             }
 
             if (src.getTagCompound() != null) {
-                jsonObject.addProperty(TAG_COMPOUND, src.getTagCompound().toString());
+                jsonObject.addProperty(
+                    TAG_COMPOUND,
+                    src.getTagCompound()
+                        .toString());
             }
 
             return jsonObject;

@@ -1,44 +1,38 @@
 package com.pahimar.ee3.inventory;
 
-import com.pahimar.ee3.reference.Comparators;
-import com.pahimar.ee3.reference.Names;
+import java.util.Set;
+import java.util.TreeSet;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-import java.util.Set;
-import java.util.TreeSet;
+import com.pahimar.ee3.reference.Comparators;
+import com.pahimar.ee3.reference.Names;
 
-public class InventoryAlchenomicon implements IInventory
-{
+public class InventoryAlchenomicon implements IInventory {
+
     private ItemStack[] inventory;
     private Set<ItemStack> knownTransmutations;
 
-    public InventoryAlchenomicon(Set<ItemStack> knownTransmutations)
-    {
+    public InventoryAlchenomicon(Set<ItemStack> knownTransmutations) {
         inventory = new ItemStack[80];
-        if (knownTransmutations != null)
-        {
+        if (knownTransmutations != null) {
             this.knownTransmutations = knownTransmutations;
-        }
-        else
-        {
+        } else {
             this.knownTransmutations = new TreeSet<ItemStack>(Comparators.ID_COMPARATOR);
         }
         inventory = knownTransmutations.toArray(inventory);
     }
 
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return inventory.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slotIndex)
-    {
-        if (slotIndex < getSizeInventory())
-        {
+    public ItemStack getStackInSlot(int slotIndex) {
+        if (slotIndex < getSizeInventory()) {
             return inventory[slotIndex];
         }
 
@@ -46,20 +40,14 @@ public class InventoryAlchenomicon implements IInventory
     }
 
     @Override
-    public ItemStack decrStackSize(int slotIndex, int decrementAmount)
-    {
+    public ItemStack decrStackSize(int slotIndex, int decrementAmount) {
         ItemStack itemStack = getStackInSlot(slotIndex);
-        if (itemStack != null)
-        {
-            if (itemStack.stackSize <= decrementAmount)
-            {
+        if (itemStack != null) {
+            if (itemStack.stackSize <= decrementAmount) {
                 setInventorySlotContents(slotIndex, null);
-            }
-            else
-            {
+            } else {
                 itemStack = itemStack.splitStack(decrementAmount);
-                if (itemStack.stackSize == 0)
-                {
+                if (itemStack.stackSize == 0) {
                     setInventorySlotContents(slotIndex, null);
                 }
             }
@@ -69,79 +57,64 @@ public class InventoryAlchenomicon implements IInventory
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slotIndex)
-    {
-        if (getStackInSlot(slotIndex) != null)
-        {
+    public ItemStack getStackInSlotOnClosing(int slotIndex) {
+        if (getStackInSlot(slotIndex) != null) {
             ItemStack itemStack = inventory[slotIndex];
             inventory[slotIndex] = null;
             return itemStack;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     @Override
-    public void setInventorySlotContents(int slotIndex, ItemStack itemStack)
-    {
-        if (slotIndex < inventory.length)
-        {
+    public void setInventorySlotContents(int slotIndex, ItemStack itemStack) {
+        if (slotIndex < inventory.length) {
             inventory[slotIndex] = itemStack;
         }
     }
 
     @Override
-    public String getInventoryName()
-    {
+    public String getInventoryName() {
         return Names.Containers.ALCHENOMICON;
     }
 
     @Override
-    public boolean hasCustomInventoryName()
-    {
+    public boolean hasCustomInventoryName() {
         return false;
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
     @Override
-    public void markDirty()
-    {
+    public void markDirty() {
         // NOOP
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer)
-    {
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
         return true;
     }
 
     @Override
-    public void openInventory()
-    {
+    public void openInventory() {
         // NOOP
     }
 
     @Override
-    public void closeInventory()
-    {
+    public void closeInventory() {
         // NOOP
     }
 
     @Override
-    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
-    {
+    public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack) {
         return false;
     }
 
-    public Set<ItemStack> getKnownTransmutations()
-    {
+    public Set<ItemStack> getKnownTransmutations() {
         return knownTransmutations;
     }
 }

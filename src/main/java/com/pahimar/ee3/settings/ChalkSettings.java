@@ -1,196 +1,154 @@
 package com.pahimar.ee3.settings;
 
-import com.pahimar.ee3.api.array.AlchemyArrayRegistryProxy;
-import com.pahimar.ee3.util.INBTTaggable;
 import net.minecraft.nbt.NBTTagCompound;
 
+import com.pahimar.ee3.api.array.AlchemyArrayRegistryProxy;
+import com.pahimar.ee3.util.INBTTaggable;
+
 // TODO Set the NBT tag names to constants
-public class ChalkSettings implements INBTTaggable
-{
+public class ChalkSettings implements INBTTaggable {
+
     private int index;
     private int size;
     private int rotation;
 
     private final int MAX_SIZE = 5;
 
-    public ChalkSettings()
-    {
+    public ChalkSettings() {
         this(0, 1, 0);
     }
 
-    public ChalkSettings(int index, int size, int rotation)
-    {
+    public ChalkSettings(int index, int size, int rotation) {
         this.index = index;
         this.size = size;
         this.rotation = rotation;
     }
 
-    public int getIndex()
-    {
+    public int getIndex() {
         return index;
     }
 
-    public void setIndex(int index)
-    {
+    public void setIndex(int index) {
         this.index = index;
 
-        if (this.index < 0)
-        {
+        if (this.index < 0) {
             this.index = 0;
-        }
-        else if (this.index >= AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays().size())
-        {
-            this.index = AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays().size() - 1;
-        }
+        } else if (this.index >= AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays()
+            .size()) {
+                this.index = AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays()
+                    .size() - 1;
+            }
     }
 
-    public void incrementIndex()
-    {
+    public void incrementIndex() {
         index += 1;
 
-        if (index >= AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays().size())
-        {
+        if (index >= AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays()
+            .size()) {
             index = 0;
         }
     }
 
-    public void decrementIndex()
-    {
+    public void decrementIndex() {
         index -= 1;
 
-        if (index < 0)
-        {
-            this.index = AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays().size() - 1;
+        if (index < 0) {
+            this.index = AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays()
+                .size() - 1;
         }
     }
 
-    public int getSize()
-    {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(int size)
-    {
-        if (size < 1)
-        {
+    public void setSize(int size) {
+        if (size < 1) {
             this.size = 1;
-        }
-        else if (size > MAX_SIZE)
-        {
+        } else if (size > MAX_SIZE) {
             this.size = MAX_SIZE;
-        }
-        else
-        {
+        } else {
             this.size = size;
         }
     }
 
-    public void incrementSize()
-    {
-        if (size < MAX_SIZE)
-        {
+    public void incrementSize() {
+        if (size < MAX_SIZE) {
             size += 1;
         }
     }
 
-    public void decrementSize()
-    {
-        if (size > 1)
-        {
+    public void decrementSize() {
+        if (size > 1) {
             size -= 1;
         }
     }
 
-    public int getRotation()
-    {
+    public int getRotation() {
         return rotation;
     }
 
-    public void setRotation(int rotation)
-    {
-        if (rotation < 0)
-        {
+    public void setRotation(int rotation) {
+        if (rotation < 0) {
             this.rotation = 0;
-        }
-        else
-        {
+        } else {
             this.rotation = rotation % 4;
         }
     }
 
-    public void rotateClockwise()
-    {
+    public void rotateClockwise() {
         this.rotation = (rotation + 1) % 4;
     }
 
-    public void rotateCounterClockwise()
-    {
+    public void rotateCounterClockwise() {
         this.rotation -= 1;
 
-        if (this.rotation < 0)
-        {
+        if (this.rotation < 0) {
             this.rotation = 3;
         }
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound)
-    {
-        if (nbtTagCompound != null && nbtTagCompound.hasKey("chalk_settings") && nbtTagCompound.getTag("chalk_settings").getId() == (byte) 10)
-        {
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
+        if (nbtTagCompound != null && nbtTagCompound.hasKey("chalk_settings")
+            && nbtTagCompound.getTag("chalk_settings")
+                .getId() == (byte) 10) {
             NBTTagCompound chalkSettings = nbtTagCompound.getCompoundTag("chalk_settings");
-            if (chalkSettings.hasKey("index"))
-            {
+            if (chalkSettings.hasKey("index")) {
                 this.index = chalkSettings.getInteger("index");
 
-                if (this.index < 0 || this.index >= AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays().size())
-                {
+                if (this.index < 0 || this.index >= AlchemyArrayRegistryProxy.getRegisteredAlchemyArrays()
+                    .size()) {
                     this.index = 0;
                 }
-            }
-            else
-            {
+            } else {
                 this.index = 0;
             }
 
-            if (chalkSettings.hasKey("size"))
-            {
+            if (chalkSettings.hasKey("size")) {
                 this.size = chalkSettings.getInteger("size");
 
-                if (this.size < 1)
-                {
+                if (this.size < 1) {
                     this.size = 1;
-                }
-                else if (this.size > MAX_SIZE)
-                {
+                } else if (this.size > MAX_SIZE) {
                     this.size = MAX_SIZE;
                 }
-            }
-            else
-            {
+            } else {
                 this.size = 1;
             }
 
-            if (chalkSettings.hasKey("rotation"))
-            {
+            if (chalkSettings.hasKey("rotation")) {
                 this.rotation = chalkSettings.getInteger("rotation");
 
-                if (this.rotation < 0)
-                {
+                if (this.rotation < 0) {
                     this.rotation = 0;
-                }
-                else
-                {
+                } else {
                     this.rotation = this.rotation % 4;
                 }
-            }
-            else
-            {
+            } else {
                 this.rotation = 0;
             }
-        }
-        else
-        {
+        } else {
             this.index = 0;
             this.size = 1;
             this.rotation = 0;
@@ -198,8 +156,7 @@ public class ChalkSettings implements INBTTaggable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound)
-    {
+    public void writeToNBT(NBTTagCompound nbtTagCompound) {
         NBTTagCompound chalkSettings = new NBTTagCompound();
         chalkSettings.setInteger("index", index);
         chalkSettings.setInteger("size", size);
@@ -208,8 +165,8 @@ public class ChalkSettings implements INBTTaggable
     }
 
     @Override
-    public String getTagLabel()
-    {
-        return this.getClass().getName();
+    public String getTagLabel() {
+        return this.getClass()
+            .getName();
     }
 }

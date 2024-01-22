@@ -1,19 +1,18 @@
 package com.pahimar.ee3.api.exchange;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 public final class EnergyValue implements Comparable<EnergyValue> {
 
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###,###,###,###.###");
     private float energyValue;
 
-    public EnergyValue()
-    {
+    public EnergyValue() {
         this(0);
     }
 
@@ -44,8 +43,7 @@ public final class EnergyValue implements Comparable<EnergyValue> {
 
         if (energyValue != null) {
             return Float.compare(this.energyValue, energyValue.getValue());
-        }
-        else {
+        } else {
             return -1;
         }
     }
@@ -82,9 +80,11 @@ public final class EnergyValue implements Comparable<EnergyValue> {
     public static EnergyValue factor(EnergyValue energyValue, Number factor) {
 
         if ((Float.compare(factor.floatValue(), 0f) != 0) && (energyValue != null)) {
-            return new EnergyValue(new BigDecimal(energyValue.getValue() * 1f / factor.floatValue()).setScale(3, BigDecimal.ROUND_HALF_EVEN).floatValue());
-        }
-        else {
+            return new EnergyValue(
+                new BigDecimal(energyValue.getValue() * 1f / factor.floatValue())
+                    .setScale(3, BigDecimal.ROUND_HALF_EVEN)
+                    .floatValue());
+        } else {
             return null;
         }
     }

@@ -1,13 +1,15 @@
 package com.pahimar.ee3.api.knowledge;
 
-import com.pahimar.ee3.EquivalentExchange3;
-import cpw.mods.fml.common.Mod;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
+import com.pahimar.ee3.EquivalentExchange3;
+
+import cpw.mods.fml.common.Mod;
 
 public class PlayerKnowledgeRegistryProxy {
 
@@ -23,7 +25,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().doesPlayerKnow(entityPlayer, object);
+            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .doesPlayerKnow(entityPlayer, object);
         }
 
         return false;
@@ -41,7 +44,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().doesPlayerKnow(playerName, object);
+            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .doesPlayerKnow(playerName, object);
         }
 
         return false;
@@ -59,7 +63,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().canPlayerLearn(entityPlayer, object);
+            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .canPlayerLearn(entityPlayer, object);
         }
 
         return false;
@@ -77,7 +82,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().canPlayerLearn(playerName, object);
+            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .canPlayerLearn(playerName, object);
         }
 
         return false;
@@ -94,7 +100,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().getKnownItemStacks(entityPlayer);
+            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .getKnownItemStacks(entityPlayer);
         }
 
         return Collections.EMPTY_SET;
@@ -111,7 +118,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().getKnownItemStacks(playerName);
+            return EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .getKnownItemStacks(playerName);
         }
 
         return Collections.EMPTY_SET;
@@ -128,7 +136,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().teachPlayer(entityPlayer, object);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .teachPlayer(entityPlayer, object);
         }
     }
 
@@ -143,7 +152,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().teachPlayer(playerName, object);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .teachPlayer(playerName, object);
         }
     }
 
@@ -158,7 +168,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().teachPlayer(entityPlayer, objects);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .teachPlayer(entityPlayer, objects);
         }
     }
 
@@ -173,7 +184,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().teachPlayer(playerName, objects);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .teachPlayer(playerName, objects);
         }
     }
 
@@ -188,7 +200,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().makePlayerForget(entityPlayer, object);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .makePlayerForget(entityPlayer, object);
         }
     }
 
@@ -203,7 +216,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().makePlayerForget(playerName, object);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .makePlayerForget(playerName, object);
         }
     }
 
@@ -218,7 +232,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().makePlayerForget(entityPlayer, objects);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .makePlayerForget(entityPlayer, objects);
         }
     }
 
@@ -233,7 +248,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().makePlayerForget(playerName, objects);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .makePlayerForget(playerName, objects);
         }
     }
 
@@ -247,7 +263,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().makePlayerForgetAll(entityPlayer);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .makePlayerForgetAll(entityPlayer);
         }
     }
 
@@ -261,7 +278,8 @@ public class PlayerKnowledgeRegistryProxy {
         init();
 
         if (ee3Mod != null) {
-            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry().makePlayerForgetAll(playerName);
+            EE3Wrapper.ee3mod.getPlayerKnowledgeRegistry()
+                .makePlayerForgetAll(playerName);
         }
     }
 
@@ -269,6 +287,7 @@ public class PlayerKnowledgeRegistryProxy {
     private static Object ee3Mod;
 
     private static class EE3Wrapper {
+
         private static EquivalentExchange3 ee3mod;
     }
 

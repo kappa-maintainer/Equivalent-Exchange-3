@@ -1,11 +1,13 @@
 package com.pahimar.ee3.client.gui.component;
 
-import com.pahimar.ee3.client.gui.GuiBase;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Comparator;
+
 import net.minecraft.util.ResourceLocation;
 
-import java.util.Comparator;
+import com.pahimar.ee3.client.gui.GuiBase;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class GuiComponent implements Comparable<GuiComponent> {
 
@@ -68,11 +70,13 @@ public abstract class GuiComponent implements Comparable<GuiComponent> {
         this(parentGui, id, texture, positionX, positionY, 256, 256);
     }
 
-    public GuiComponent(GuiBase parentGui, String id, ResourceLocation texture, int positionX, int positionY, int componentWidth, int componentHeight) {
+    public GuiComponent(GuiBase parentGui, String id, ResourceLocation texture, int positionX, int positionY,
+        int componentWidth, int componentHeight) {
         this(parentGui, id, texture, positionX, positionY, componentWidth, componentHeight, 256, 256);
     }
 
-    public GuiComponent(GuiBase parentGui, String id, ResourceLocation texture, int positionX, int positionY, int componentWidth, int componentHeight, int textureWidth, int textureHeight) {
+    public GuiComponent(GuiBase parentGui, String id, ResourceLocation texture, int positionX, int positionY,
+        int componentWidth, int componentHeight, int textureWidth, int textureHeight) {
         this.parentGui = parentGui;
         this.id = id;
         this.texture = texture;
@@ -209,7 +213,8 @@ public abstract class GuiComponent implements Comparable<GuiComponent> {
 
     public boolean hasFocus() {
         if (isFocusable) {
-            return getParentGui().getActiveGuiComponentId().equals(getId());
+            return getParentGui().getActiveGuiComponentId()
+                .equals(getId());
         }
 
         return false;
@@ -229,7 +234,8 @@ public abstract class GuiComponent implements Comparable<GuiComponent> {
      * @return true if the specified coordinates intersect with this GuiComponent, false otherwise
      */
     public boolean intersectsWith(int xCoord, int yCoord) {
-        return (xCoord >= this.positionX && xCoord <= this.positionX + this.componentWidth) && (yCoord >= this.positionY && yCoord <= this.positionY + this.componentHeight);
+        return (xCoord >= this.positionX && xCoord <= this.positionX + this.componentWidth)
+            && (yCoord >= this.positionY && yCoord <= this.positionY + this.componentHeight);
     }
 
     /**
@@ -241,9 +247,10 @@ public abstract class GuiComponent implements Comparable<GuiComponent> {
      * @return
      */
     public boolean intersectsWith(int xCoord, int yCoord, int zIndex) {
-        return (xCoord >= this.positionX && xCoord <= this.positionX + this.componentWidth) && (yCoord >= this.positionY && yCoord <= this.positionY + this.componentHeight) && (zIndex == this.zIndex);
+        return (xCoord >= this.positionX && xCoord <= this.positionX + this.componentWidth)
+            && (yCoord >= this.positionY && yCoord <= this.positionY + this.componentHeight)
+            && (zIndex == this.zIndex);
     }
-
 
     /**
      * @param rawMouseX

@@ -1,15 +1,7 @@
 package com.pahimar.ee3.block;
 
-import com.pahimar.ee3.EquivalentExchange3;
-import com.pahimar.ee3.reference.GUIs;
-import com.pahimar.ee3.reference.Names;
-import com.pahimar.ee3.reference.RenderIds;
-import com.pahimar.ee3.tileentity.TileEntityAlchemicalChest;
-import com.pahimar.ee3.tileentity.TileEntityAlchemicalChestLarge;
-import com.pahimar.ee3.tileentity.TileEntityAlchemicalChestMedium;
-import com.pahimar.ee3.tileentity.TileEntityAlchemicalChestSmall;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,12 +11,21 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.List;
+import com.pahimar.ee3.EquivalentExchange3;
+import com.pahimar.ee3.reference.GUIs;
+import com.pahimar.ee3.reference.Names;
+import com.pahimar.ee3.reference.RenderIds;
+import com.pahimar.ee3.tileentity.TileEntityAlchemicalChest;
+import com.pahimar.ee3.tileentity.TileEntityAlchemicalChestLarge;
+import com.pahimar.ee3.tileentity.TileEntityAlchemicalChestMedium;
+import com.pahimar.ee3.tileentity.TileEntityAlchemicalChestSmall;
 
-public class BlockAlchemicalChest extends BlockTileEntityEE
-{
-    public BlockAlchemicalChest()
-    {
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class BlockAlchemicalChest extends BlockTileEntityEE {
+
+    public BlockAlchemicalChest() {
         super(Material.wood);
         this.setHardness(2.5f);
         this.setBlockName(Names.Blocks.ALCHEMICAL_CHEST);
@@ -32,18 +33,12 @@ public class BlockAlchemicalChest extends BlockTileEntityEE
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metaData)
-    {
-        if (metaData == 0)
-        {
+    public TileEntity createNewTileEntity(World world, int metaData) {
+        if (metaData == 0) {
             return new TileEntityAlchemicalChestSmall();
-        }
-        else if (metaData == 1)
-        {
+        } else if (metaData == 1) {
             return new TileEntityAlchemicalChestMedium();
-        }
-        else if (metaData == 2)
-        {
+        } else if (metaData == 2) {
             return new TileEntityAlchemicalChestLarge();
         }
 
@@ -51,40 +46,33 @@ public class BlockAlchemicalChest extends BlockTileEntityEE
     }
 
     @Override
-    public int damageDropped(int metaData)
-    {
+    public int damageDropped(int metaData) {
         return metaData;
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return RenderIds.alchemicalChest;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
-    {
-        if ((player.isSneaking() && player.getCurrentEquippedItem() != null) || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN))
-        {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7,
+        float par8, float par9) {
+        if ((player.isSneaking() && player.getCurrentEquippedItem() != null)
+            || world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN)) {
             return true;
-        }
-        else
-        {
-            if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TileEntityAlchemicalChest)
-            {
+        } else {
+            if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TileEntityAlchemicalChest) {
                 player.openGui(EquivalentExchange3.instance, GUIs.ALCHEMICAL_CHEST.ordinal(), world, x, y, z);
             }
 
@@ -94,10 +82,8 @@ public class BlockAlchemicalChest extends BlockTileEntityEE
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
-    {
-        for (int meta = 0; meta < 3; meta++)
-        {
+    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+        for (int meta = 0; meta < 3; meta++) {
             list.add(new ItemStack(item, 1, meta));
         }
     }

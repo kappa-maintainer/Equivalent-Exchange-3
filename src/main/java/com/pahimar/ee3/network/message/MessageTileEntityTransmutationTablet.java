@@ -1,24 +1,26 @@
 package com.pahimar.ee3.network.message;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+
 import com.pahimar.ee3.tileentity.TileEntityTransmutationTablet;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-public class MessageTileEntityTransmutationTablet implements IMessage, IMessageHandler<MessageTileEntityTransmutationTablet, IMessage> {
+public class MessageTileEntityTransmutationTablet
+    implements IMessage, IMessageHandler<MessageTileEntityTransmutationTablet, IMessage> {
 
     public NBTTagCompound tileEntityTransmutationTabletNBT;
 
-    public MessageTileEntityTransmutationTablet() {
-    }
+    public MessageTileEntityTransmutationTablet() {}
 
     public MessageTileEntityTransmutationTablet(TileEntityTransmutationTablet tileEntityTransmutationTablet) {
 
@@ -33,15 +35,16 @@ public class MessageTileEntityTransmutationTablet implements IMessage, IMessageH
         int readableBytes = buf.readInt();
 
         if (readableBytes > 0) {
-            compressedNBT = buf.readBytes(readableBytes).array();
+            compressedNBT = buf.readBytes(readableBytes)
+                .array();
         }
 
         if (compressedNBT != null) {
 
             try {
-                this.tileEntityTransmutationTabletNBT = CompressedStreamTools.readCompressed(new ByteArrayInputStream(compressedNBT));
-            }
-            catch (IOException e) {
+                this.tileEntityTransmutationTabletNBT = CompressedStreamTools
+                    .readCompressed(new ByteArrayInputStream(compressedNBT));
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -56,16 +59,14 @@ public class MessageTileEntityTransmutationTablet implements IMessage, IMessageH
             if (tileEntityTransmutationTabletNBT != null) {
                 compressedNBT = CompressedStreamTools.compress(tileEntityTransmutationTabletNBT);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         if (compressedNBT != null) {
             buf.writeInt(compressedNBT.length);
             buf.writeBytes(compressedNBT);
-        }
-        else {
+        } else {
             buf.writeInt(0);
         }
     }
@@ -78,12 +79,20 @@ public class MessageTileEntityTransmutationTablet implements IMessage, IMessageH
             TileEntityTransmutationTablet tileEntityTransmutationTablet = new TileEntityTransmutationTablet();
             tileEntityTransmutationTablet.readFromNBT(message.tileEntityTransmutationTabletNBT);
 
-            TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(tileEntityTransmutationTablet.xCoord, tileEntityTransmutationTablet.yCoord, tileEntityTransmutationTablet.zCoord);
+            TileEntity tileEntity = FMLClientHandler.instance()
+                .getClient().theWorld.getTileEntity(
+                    tileEntityTransmutationTablet.xCoord,
+                    tileEntityTransmutationTablet.yCoord,
+                    tileEntityTransmutationTablet.zCoord);
 
             if (tileEntity instanceof TileEntityTransmutationTablet) {
                 tileEntity.readFromNBT(message.tileEntityTransmutationTabletNBT);
-                //NAME UPDATE
-                FMLClientHandler.instance().getClient().theWorld.func_147451_t(tileEntityTransmutationTablet.xCoord, tileEntityTransmutationTablet.yCoord, tileEntityTransmutationTablet.zCoord);
+                // NAME UPDATE
+                FMLClientHandler.instance()
+                    .getClient().theWorld.func_147451_t(
+                        tileEntityTransmutationTablet.xCoord,
+                        tileEntityTransmutationTablet.yCoord,
+                        tileEntityTransmutationTablet.zCoord);
             }
         }
 

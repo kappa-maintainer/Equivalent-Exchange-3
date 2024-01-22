@@ -1,5 +1,7 @@
 package com.pahimar.ee3.network.message;
 
+import java.util.Map;
+
 import com.google.gson.JsonParseException;
 import com.pahimar.ee3.api.exchange.EnergyValue;
 import com.pahimar.ee3.exchange.EnergyValueRegistry;
@@ -7,12 +9,11 @@ import com.pahimar.ee3.exchange.WrappedStack;
 import com.pahimar.ee3.util.CompressionHelper;
 import com.pahimar.ee3.util.LogHelper;
 import com.pahimar.ee3.util.SerializationHelper;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-
-import java.util.Map;
 
 public class MessageSyncEnergyValues implements IMessage, IMessageHandler<MessageSyncEnergyValues, IMessage> {
 
@@ -33,7 +34,8 @@ public class MessageSyncEnergyValues implements IMessage, IMessageHandler<Messag
         int compressedJsonLength = buf.readInt();
 
         if (compressedJsonLength != 0) {
-            byte[] compressedValueMap = buf.readBytes(compressedJsonLength).array();
+            byte[] compressedValueMap = buf.readBytes(compressedJsonLength)
+                .array();
 
             if (compressedValueMap != null) {
 
@@ -41,17 +43,14 @@ public class MessageSyncEnergyValues implements IMessage, IMessageHandler<Messag
 
                 try {
                     valueMap = SerializationHelper.GSON.fromJson(jsonString, SerializationHelper.ENERGY_VALUE_MAP_TYPE);
-                }
-                catch (JsonParseException e) {
+                } catch (JsonParseException e) {
                     LogHelper.warn("Failed to read energy value map from server");
                     valueMap = null;
                 }
-            }
-            else {
+            } else {
                 valueMap = null;
             }
-        }
-        else {
+        } else {
             valueMap = null;
         }
     }
@@ -66,23 +65,23 @@ public class MessageSyncEnergyValues implements IMessage, IMessageHandler<Messag
 
         if (valueMap != null) {
 
-            byte[] compressedValueMap = CompressionHelper.compress(SerializationHelper.GSON.toJson(valueMap, SerializationHelper.ENERGY_VALUE_MAP_TYPE));
+            byte[] compressedValueMap = CompressionHelper
+                .compress(SerializationHelper.GSON.toJson(valueMap, SerializationHelper.ENERGY_VALUE_MAP_TYPE));
 
             if (compressedValueMap != null) {
                 buf.writeInt(compressedValueMap.length);
                 buf.writeBytes(compressedValueMap);
-            }
-            else {
+            } else {
                 buf.writeInt(0);
             }
-        }
-        else {
+        } else {
             buf.writeInt(0);
         }
     }
 
     /**
-     * Called when a message is received of the appropriate type. You can optionally return a reply message, or null if no reply
+     * Called when a message is received of the appropriate type. You can optionally return a reply message, or null if
+     * no reply
      * is needed.
      *
      * @param message The message
@@ -94,10 +93,14 @@ public class MessageSyncEnergyValues implements IMessage, IMessageHandler<Messag
 
         if (message.valueMap != null) {
             EnergyValueRegistry.INSTANCE.load(message.valueMap);
-            LogHelper.info(EnergyValueRegistry.ENERGY_VALUE_MARKER, "Client successfully received {} energy values from server", message.valueMap.size());
-        }
-        else {
-            LogHelper.info(EnergyValueRegistry.ENERGY_VALUE_MARKER, "Client failed to receive energy values from server - falling back to local values");
+            LogHelper.info(
+                EnergyValueRegistry.ENERGY_VALUE_MARKER,
+                "Client successfully received {} energy values from server",
+                message.valueMap.size());
+        } else {
+            LogHelper.info(
+                EnergyValueRegistry.ENERGY_VALUE_MARKER,
+                "Client failed to receive energy values from server - falling back to local values");
         }
 
         return null;

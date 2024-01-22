@@ -1,19 +1,19 @@
 package com.pahimar.ee3.item;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
 import com.pahimar.ee3.reference.Key;
 import com.pahimar.ee3.reference.Names;
 import com.pahimar.ee3.util.IKeyBound;
 import com.pahimar.ee3.util.IOverlayItem;
 import com.pahimar.ee3.util.LogHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
-public class ItemPhilosophersStone extends ItemEE implements IKeyBound, IOverlayItem
-{
+public class ItemPhilosophersStone extends ItemEE implements IKeyBound, IOverlayItem {
+
     private int maxChargeLevel;
 
-    public ItemPhilosophersStone()
-    {
+    public ItemPhilosophersStone() {
         super();
         this.setUnlocalizedName(Names.Items.PHILOSOPHERS_STONE);
         this.setMaxDamage(1000);
@@ -21,20 +21,17 @@ public class ItemPhilosophersStone extends ItemEE implements IKeyBound, IOverlay
     }
 
     @Override
-    public boolean doesContainerItemLeaveCraftingGrid(ItemStack itemStack)
-    {
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack itemStack) {
         return false;
     }
 
     @Override
-    public boolean getShareTag()
-    {
+    public boolean getShareTag() {
         return true;
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack)
-    {
+    public ItemStack getContainerItem(ItemStack itemStack) {
         ItemStack copiedStack = itemStack.copy();
 
         copiedStack.setItemDamage(copiedStack.getItemDamage() + 1);
@@ -44,8 +41,7 @@ public class ItemPhilosophersStone extends ItemEE implements IKeyBound, IOverlay
     }
 
     @Override
-    public void doKeyBindingAction(EntityPlayer entityPlayer, ItemStack itemStack, Key key)
-    {
+    public void doKeyBindingAction(EntityPlayer entityPlayer, ItemStack itemStack, Key key) {
         LogHelper.info("{} {} {}", entityPlayer.toString(), itemStack.toString(), key.toString());
     }
 }

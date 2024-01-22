@@ -1,36 +1,37 @@
 package com.pahimar.ee3.network.message;
 
+import java.util.Collection;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+
 import com.google.gson.JsonSyntaxException;
 import com.pahimar.ee3.knowledge.PlayerKnowledge;
 import com.pahimar.ee3.tileentity.TileEntityTransmutationTablet;
 import com.pahimar.ee3.util.CompressionHelper;
 import com.pahimar.ee3.util.SerializationHelper;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-
-import java.util.Collection;
 
 public class MessagePlayerKnowledge implements IMessage, IMessageHandler<MessagePlayerKnowledge, IMessage> {
 
     public int xCoord, yCoord, zCoord;
     public PlayerKnowledge playerKnowledge;
 
-    public MessagePlayerKnowledge(){
-    }
+    public MessagePlayerKnowledge() {}
 
-    public MessagePlayerKnowledge(TileEntityTransmutationTablet transmutationTablet, Collection<ItemStack> knownItemStacks) {
+    public MessagePlayerKnowledge(TileEntityTransmutationTablet transmutationTablet,
+        Collection<ItemStack> knownItemStacks) {
 
         if (transmutationTablet != null) {
             this.xCoord = transmutationTablet.xCoord;
             this.yCoord = transmutationTablet.yCoord;
             this.zCoord = transmutationTablet.zCoord;
-        }
-        else {
+        } else {
             this.xCoord = 0;
             this.yCoord = Integer.MIN_VALUE;
             this.zCoord = 0;
@@ -38,8 +39,7 @@ public class MessagePlayerKnowledge implements IMessage, IMessageHandler<Message
 
         if (knownItemStacks != null) {
             this.playerKnowledge = new PlayerKnowledge(knownItemStacks);
-        }
-        else {
+        } else {
             this.playerKnowledge = new PlayerKnowledge();
         }
     }
@@ -55,14 +55,15 @@ public class MessagePlayerKnowledge implements IMessage, IMessageHandler<Message
         int readableBytes = buf.readInt();
 
         if (readableBytes > 0) {
-            compressedJson = buf.readBytes(readableBytes).array();
+            compressedJson = buf.readBytes(readableBytes)
+                .array();
         }
 
         if (compressedJson != null) {
             try {
-                this.playerKnowledge = SerializationHelper.GSON.fromJson(CompressionHelper.decompress(compressedJson), PlayerKnowledge.class);
-            }
-            catch (JsonSyntaxException e) {
+                this.playerKnowledge = SerializationHelper.GSON
+                    .fromJson(CompressionHelper.decompress(compressedJson), PlayerKnowledge.class);
+            } catch (JsonSyntaxException e) {
                 this.playerKnowledge = new PlayerKnowledge();
             }
         }
@@ -84,8 +85,7 @@ public class MessagePlayerKnowledge implements IMessage, IMessageHandler<Message
         if (compressedJson != null) {
             buf.writeInt(compressedJson.length);
             buf.writeBytes(compressedJson);
-        }
-        else {
+        } else {
             buf.writeInt(0);
         }
     }
@@ -95,7 +95,9 @@ public class MessagePlayerKnowledge implements IMessage, IMessageHandler<Message
 
         if (message.yCoord != Integer.MIN_VALUE) {
 
-            TileEntity tileEntity = FMLClientHandler.instance().getWorldClient().getTileEntity(message.xCoord, message.yCoord, message.zCoord);
+            TileEntity tileEntity = FMLClientHandler.instance()
+                .getWorldClient()
+                .getTileEntity(message.xCoord, message.yCoord, message.zCoord);
 
             if (tileEntity instanceof TileEntityTransmutationTablet) {
                 ((TileEntityTransmutationTablet) tileEntity).handlePlayerKnowledgeUpdate(message.playerKnowledge);

@@ -1,9 +1,8 @@
 package com.pahimar.ee3.recipe;
 
-import com.pahimar.ee3.api.recipe.RecipeRegistryProxy;
-import com.pahimar.ee3.exchange.OreStack;
-import com.pahimar.ee3.exchange.WrappedStack;
-import com.pahimar.ee3.util.RecipeHelper;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -14,17 +13,22 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import java.util.Arrays;
-import java.util.List;
+import com.pahimar.ee3.api.recipe.RecipeRegistryProxy;
+import com.pahimar.ee3.exchange.OreStack;
+import com.pahimar.ee3.exchange.WrappedStack;
+import com.pahimar.ee3.util.RecipeHelper;
 
 public class RecipesVanilla {
 
     public void registerRecipes() {
 
-        for (Object recipeObject : CraftingManager.getInstance().getRecipeList()) {
+        for (Object recipeObject : CraftingManager.getInstance()
+            .getRecipeList()) {
 
             // Vanilla
-            if (recipeObject instanceof ShapedRecipes || recipeObject instanceof ShapelessRecipes || recipeObject instanceof ShapedOreRecipe || recipeObject instanceof ShapelessOreRecipe) {
+            if (recipeObject instanceof ShapedRecipes || recipeObject instanceof ShapelessRecipes
+                || recipeObject instanceof ShapedOreRecipe
+                || recipeObject instanceof ShapelessOreRecipe) {
                 IRecipe recipe = (IRecipe) recipeObject;
                 ItemStack recipeOutput = recipe.getRecipeOutput();
 
@@ -40,6 +44,11 @@ public class RecipesVanilla {
         }
 
         // Fixes for OreDictionary entries that may not exist (because the OreDictionary entry has nothing in it)
-        RecipeRegistryProxy.addRecipe(new ItemStack(Blocks.daylight_detector), Arrays.asList(new ItemStack(Blocks.glass, 3, OreDictionary.WILDCARD_VALUE), new OreStack("slabWood", 3), new OreStack("gemQuartz", 3)));
+        RecipeRegistryProxy.addRecipe(
+            new ItemStack(Blocks.daylight_detector),
+            Arrays.asList(
+                new ItemStack(Blocks.glass, 3, OreDictionary.WILDCARD_VALUE),
+                new OreStack("slabWood", 3),
+                new OreStack("gemQuartz", 3)));
     }
 }

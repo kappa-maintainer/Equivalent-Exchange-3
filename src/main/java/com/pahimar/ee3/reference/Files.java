@@ -1,12 +1,13 @@
 package com.pahimar.ee3.reference;
 
+import java.io.File;
+
 import com.pahimar.ee3.blacklist.BlacklistRegistry;
 import com.pahimar.ee3.exchange.EnergyValueRegistry;
 import com.pahimar.ee3.knowledge.PlayerKnowledgeRegistry;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-
-import java.io.File;
 
 public class Files {
 
@@ -25,22 +26,39 @@ public class Files {
 
     public static void init(FMLPreInitializationEvent event) {
 
-        globalDataDirectory = new File(event.getModConfigurationDirectory().getParentFile(), "data" + File.separator + Reference.LOWERCASE_MOD_ID);
+        globalDataDirectory = new File(
+            event.getModConfigurationDirectory()
+                .getParentFile(),
+            "data" + File.separator + Reference.LOWERCASE_MOD_ID);
         globalTestDirectory = new File(globalDataDirectory, "tests");
         globalTestDirectory.mkdirs();
 
         EnergyValueRegistry.energyValuesDirectory = new File(globalDataDirectory, "energy-values");
         EnergyValueRegistry.energyValuesDirectory.mkdirs();
-        EnergyValueRegistry.energyValuesFile = new File(EnergyValueRegistry.energyValuesDirectory, ENERGY_VALUES_JSON_FILENAME);
-        EnergyValueRegistry.preCalculationValuesFile = new File(EnergyValueRegistry.energyValuesDirectory, PRE_CALCULATION_ENERGY_VALUES_FILENAME);
-        EnergyValueRegistry.postCalculationValuesFile = new File(EnergyValueRegistry.energyValuesDirectory, POST_CALCULATION_ENERGY_VALUES_FILENAME);
+        EnergyValueRegistry.energyValuesFile = new File(
+            EnergyValueRegistry.energyValuesDirectory,
+            ENERGY_VALUES_JSON_FILENAME);
+        EnergyValueRegistry.preCalculationValuesFile = new File(
+            EnergyValueRegistry.energyValuesDirectory,
+            PRE_CALCULATION_ENERGY_VALUES_FILENAME);
+        EnergyValueRegistry.postCalculationValuesFile = new File(
+            EnergyValueRegistry.energyValuesDirectory,
+            POST_CALCULATION_ENERGY_VALUES_FILENAME);
 
-        File templatePlayerKnowledgeDirectory = new File(globalDataDirectory, "knowledge" + File.separator + "transmutation");
+        File templatePlayerKnowledgeDirectory = new File(
+            globalDataDirectory,
+            "knowledge" + File.separator + "transmutation");
         templatePlayerKnowledgeDirectory.mkdirs();
-        PlayerKnowledgeRegistry.templatePlayerKnowledgeFile = new File(templatePlayerKnowledgeDirectory, TEMPLATE_PLAYER_KNOWLEDGE_FILENAME);
+        PlayerKnowledgeRegistry.templatePlayerKnowledgeFile = new File(
+            templatePlayerKnowledgeDirectory,
+            TEMPLATE_PLAYER_KNOWLEDGE_FILENAME);
 
-        BlacklistRegistry.knowledgeBlacklistFile = new File(globalDataDirectory, "blacklist" + File.separator + KNOWLEDGE_BLACKLIST_FILENAME);
-        BlacklistRegistry.exchangeBlacklistFile = new File(globalDataDirectory, "blacklist" + File.separator + EXCHANGE_BLACKLIST_FILENAME);
+        BlacklistRegistry.knowledgeBlacklistFile = new File(
+            globalDataDirectory,
+            "blacklist" + File.separator + KNOWLEDGE_BLACKLIST_FILENAME);
+        BlacklistRegistry.exchangeBlacklistFile = new File(
+            globalDataDirectory,
+            "blacklist" + File.separator + EXCHANGE_BLACKLIST_FILENAME);
     }
 
     /**
@@ -48,7 +66,13 @@ public class Files {
      */
     public static void updateFileReferences() {
 
-        playerDataDirectory = new File(FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld().getSaveHandler().getWorldDirectory(), "playerdata" + File.separator + Reference.LOWERCASE_MOD_ID);
+        playerDataDirectory = new File(
+            FMLCommonHandler.instance()
+                .getMinecraftServerInstance()
+                .getEntityWorld()
+                .getSaveHandler()
+                .getWorldDirectory(),
+            "playerdata" + File.separator + Reference.LOWERCASE_MOD_ID);
         playerDataDirectory.mkdirs();
     }
 }

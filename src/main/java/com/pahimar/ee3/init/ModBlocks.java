@@ -1,16 +1,32 @@
 package com.pahimar.ee3.init;
 
-import com.pahimar.ee3.block.*;
+import net.minecraft.block.Block;
+
+import com.pahimar.ee3.block.BlockAlchemicalChest;
+import com.pahimar.ee3.block.BlockAlchemicalFuel;
+import com.pahimar.ee3.block.BlockAlchemyArray;
+import com.pahimar.ee3.block.BlockAludel;
+import com.pahimar.ee3.block.BlockAshInfusedStone;
+import com.pahimar.ee3.block.BlockAshInfusedStoneSlab;
+import com.pahimar.ee3.block.BlockAugmentationTable;
+import com.pahimar.ee3.block.BlockCalcinator;
+import com.pahimar.ee3.block.BlockChalk;
+import com.pahimar.ee3.block.BlockDummyArray;
+import com.pahimar.ee3.block.BlockEE;
+import com.pahimar.ee3.block.BlockGlassBell;
+import com.pahimar.ee3.block.BlockResearchStation;
+import com.pahimar.ee3.block.BlockTileEntityEE;
+import com.pahimar.ee3.block.BlockTransmutationTablet;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 import com.pahimar.ee3.item.ItemBlockAlchemicalFuel;
 import com.pahimar.ee3.reference.Names;
 import com.pahimar.ee3.reference.Reference;
+
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 
 @GameRegistry.ObjectHolder(Reference.MOD_ID)
-public class ModBlocks
-{
+public class ModBlocks {
+
     public static final BlockEE chalkBlock = new BlockChalk();
     public static final BlockEE alchemicalFuelBlock = new BlockAlchemicalFuel();
     public static final BlockTileEntityEE alchemicalChest = new BlockAlchemicalChest();
@@ -25,8 +41,7 @@ public class ModBlocks
     public static final BlockTileEntityEE transmutationTablet = new BlockTransmutationTablet();
     public static final Block ashInfusedStoneSlab = new BlockAshInfusedStoneSlab();
 
-    public static void init()
-    {
+    public static void init() {
         GameRegistry.registerBlock(calcinator, Names.Blocks.CALCINATOR);
         GameRegistry.registerBlock(aludel, Names.Blocks.ALUDEL);
         GameRegistry.registerBlock(glassBell, Names.Blocks.GLASS_BELL);

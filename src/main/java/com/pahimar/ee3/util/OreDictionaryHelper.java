@@ -1,11 +1,11 @@
 package com.pahimar.ee3.util;
 
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class OreDictionaryHelper {
 

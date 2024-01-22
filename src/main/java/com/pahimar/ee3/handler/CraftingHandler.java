@@ -1,17 +1,21 @@
 package com.pahimar.ee3.handler;
 
+import net.minecraft.item.crafting.CraftingManager;
+
 import com.pahimar.ee3.item.crafting.RecipesAlchemicalBagDyes;
 import com.pahimar.ee3.util.IOwnable;
 import com.pahimar.ee3.util.ItemStackUtils;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
-import net.minecraft.item.crafting.CraftingManager;
 
-public class CraftingHandler
-{
+public class CraftingHandler {
+
     public static void init() {
         // Add in the ability to dye Alchemical Bags
-        CraftingManager.getInstance().getRecipeList().add(new RecipesAlchemicalBagDyes());
+        CraftingManager.getInstance()
+            .getRecipeList()
+            .add(new RecipesAlchemicalBagDyes());
     }
 
     @SubscribeEvent

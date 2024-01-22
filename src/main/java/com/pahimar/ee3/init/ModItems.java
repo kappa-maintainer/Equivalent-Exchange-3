@@ -1,13 +1,41 @@
 package com.pahimar.ee3.init;
 
-import com.pahimar.ee3.item.*;
+import com.pahimar.ee3.item.ItemAlchemicalBag;
+import com.pahimar.ee3.item.ItemAlchemicalDust;
+import com.pahimar.ee3.item.ItemAlchemicalFuel;
+import com.pahimar.ee3.item.ItemAlchemicalInventoryUpgrade;
+import com.pahimar.ee3.item.ItemAlchenomicon;
+import com.pahimar.ee3.item.ItemChalk;
+import com.pahimar.ee3.item.ItemDarkMatterArrow;
+import com.pahimar.ee3.item.ItemDarkMatterAxe;
+import com.pahimar.ee3.item.ItemDarkMatterBow;
+import com.pahimar.ee3.item.ItemDarkMatterFishingRod;
+import com.pahimar.ee3.item.ItemDarkMatterHammer;
+import com.pahimar.ee3.item.ItemDarkMatterHoe;
+import com.pahimar.ee3.item.ItemDarkMatterPickAxe;
+import com.pahimar.ee3.item.ItemDarkMatterShears;
+import com.pahimar.ee3.item.ItemDarkMatterShovel;
+import com.pahimar.ee3.item.ItemDarkMatterSword;
+import com.pahimar.ee3.item.ItemDiviningRod;
+import com.pahimar.ee3.item.ItemEE;
+import com.pahimar.ee3.item.ItemGem;
+import com.pahimar.ee3.item.ItemInertStone;
+import com.pahimar.ee3.item.ItemKnowledgeScroll;
+import com.pahimar.ee3.item.ItemLootBall;
+import com.pahimar.ee3.item.ItemMatter;
+import com.pahimar.ee3.item.ItemMiniumShard;
+import com.pahimar.ee3.item.ItemMiniumStone;
+import com.pahimar.ee3.item.ItemPhilosophersStone;
+import com.pahimar.ee3.item.ItemPotionLethe;
+import com.pahimar.ee3.item.ItemToolEE;
 import com.pahimar.ee3.reference.Names;
 import com.pahimar.ee3.reference.Reference;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @GameRegistry.ObjectHolder(Reference.MOD_ID)
-public class ModItems
-{
+public class ModItems {
+
     public static final ItemEE alchemicalBag = new ItemAlchemicalBag();
     public static final ItemEE alchemicalDust = new ItemAlchemicalDust();
     public static final ItemEE alchemicalFuel = new ItemAlchemicalFuel();
@@ -37,8 +65,7 @@ public class ModItems
     public static final ItemDarkMatterArrow arrowDarkMatter = new ItemDarkMatterArrow();
     public static final ItemDarkMatterSword swordDarkMatter = new ItemDarkMatterSword();
 
-    public static void init()
-    {
+    public static void init() {
         GameRegistry.registerItem(alchemicalBag, Names.Items.ALCHEMICAL_BAG);
         GameRegistry.registerItem(alchemicalDust, Names.Items.ALCHEMICAL_DUST);
         GameRegistry.registerItem(alchemicalFuel, Names.Items.ALCHEMICAL_FUEL);

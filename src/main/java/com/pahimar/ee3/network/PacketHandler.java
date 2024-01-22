@@ -1,14 +1,35 @@
 package com.pahimar.ee3.network;
 
-import com.pahimar.ee3.network.message.*;
+import com.pahimar.ee3.network.message.MessageChalkSettings;
+import com.pahimar.ee3.network.message.MessageGuiElementClicked;
+import com.pahimar.ee3.network.message.MessageGuiElementTextFieldUpdate;
+import com.pahimar.ee3.network.message.MessageKeyPressed;
+import com.pahimar.ee3.network.message.MessagePlayerKnowledge;
+import com.pahimar.ee3.network.message.MessageSetBlacklistEntry;
+import com.pahimar.ee3.network.message.MessageSetEnergyValue;
+import com.pahimar.ee3.network.message.MessageSingleParticleEvent;
+import com.pahimar.ee3.network.message.MessageSliderElementUpdated;
+import com.pahimar.ee3.network.message.MessageSoundEvent;
+import com.pahimar.ee3.network.message.MessageSyncBlacklist;
+import com.pahimar.ee3.network.message.MessageSyncEnergyValues;
+import com.pahimar.ee3.network.message.MessageTileCalcinator;
+import com.pahimar.ee3.network.message.MessageTileEntityAlchemyArray;
+import com.pahimar.ee3.network.message.MessageTileEntityAludel;
+import com.pahimar.ee3.network.message.MessageTileEntityDummy;
+import com.pahimar.ee3.network.message.MessageTileEntityEE;
+import com.pahimar.ee3.network.message.MessageTileEntityGlassBell;
+import com.pahimar.ee3.network.message.MessageTileEntityResearchStation;
+import com.pahimar.ee3.network.message.MessageTileEntityTransmutationTablet;
 import com.pahimar.ee3.reference.Reference;
+
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 
 public class PacketHandler {
 
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.LOWERCASE_MOD_ID);
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE
+        .newSimpleChannel(Reference.LOWERCASE_MOD_ID);
 
     public static void init() {
         INSTANCE.registerMessage(MessageTileEntityEE.class, MessageTileEntityEE.class, 0, Side.CLIENT);
@@ -20,15 +41,28 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageSyncEnergyValues.class, MessageSyncEnergyValues.class, 6, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetEnergyValue.class, MessageSetEnergyValue.class, 7, Side.CLIENT);
         INSTANCE.registerMessage(MessageGuiElementClicked.class, MessageGuiElementClicked.class, 8, Side.SERVER);
-        INSTANCE.registerMessage(MessageGuiElementTextFieldUpdate.class, MessageGuiElementTextFieldUpdate.class, 9, Side.SERVER);
+        INSTANCE.registerMessage(
+            MessageGuiElementTextFieldUpdate.class,
+            MessageGuiElementTextFieldUpdate.class,
+            9,
+            Side.SERVER);
         INSTANCE.registerMessage(MessageChalkSettings.class, MessageChalkSettings.class, 10, Side.CLIENT);
         INSTANCE.registerMessage(MessageTileEntityDummy.class, MessageTileEntityDummy.class, 11, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileEntityAlchemyArray.class, MessageTileEntityAlchemyArray.class, 12, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileEntityTransmutationTablet.class, MessageTileEntityTransmutationTablet.class, 13, Side.CLIENT);
+        INSTANCE
+            .registerMessage(MessageTileEntityAlchemyArray.class, MessageTileEntityAlchemyArray.class, 12, Side.CLIENT);
+        INSTANCE.registerMessage(
+            MessageTileEntityTransmutationTablet.class,
+            MessageTileEntityTransmutationTablet.class,
+            13,
+            Side.CLIENT);
         INSTANCE.registerMessage(MessageSingleParticleEvent.class, MessageSingleParticleEvent.class, 14, Side.CLIENT);
         INSTANCE.registerMessage(MessageSliderElementUpdated.class, MessageSliderElementUpdated.class, 15, Side.SERVER);
         INSTANCE.registerMessage(MessagePlayerKnowledge.class, MessagePlayerKnowledge.class, 16, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileEntityResearchStation.class, MessageTileEntityResearchStation.class, 17, Side.CLIENT);
+        INSTANCE.registerMessage(
+            MessageTileEntityResearchStation.class,
+            MessageTileEntityResearchStation.class,
+            17,
+            Side.CLIENT);
         INSTANCE.registerMessage(MessageSyncBlacklist.class, MessageSyncBlacklist.class, 18, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetBlacklistEntry.class, MessageSetBlacklistEntry.class, 19, Side.CLIENT);
     }

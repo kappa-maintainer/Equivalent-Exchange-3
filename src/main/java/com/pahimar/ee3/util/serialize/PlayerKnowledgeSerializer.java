@@ -1,20 +1,28 @@
 package com.pahimar.ee3.util.serialize;
 
-import com.google.gson.*;
-import com.pahimar.ee3.exchange.WrappedStack;
-import com.pahimar.ee3.knowledge.PlayerKnowledge;
-import com.pahimar.ee3.reference.Comparators;
-import net.minecraft.item.ItemStack;
-
 import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.minecraft.item.ItemStack;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.pahimar.ee3.exchange.WrappedStack;
+import com.pahimar.ee3.knowledge.PlayerKnowledge;
+import com.pahimar.ee3.reference.Comparators;
+
 public class PlayerKnowledgeSerializer implements JsonSerializer<PlayerKnowledge>, JsonDeserializer<PlayerKnowledge> {
 
     @Override
-    public PlayerKnowledge deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public PlayerKnowledge deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+        throws JsonParseException {
 
         Set<ItemStack> knownItemStacks = new TreeSet<>(Comparators.ID_COMPARATOR);
 
@@ -33,9 +41,7 @@ public class PlayerKnowledgeSerializer implements JsonSerializer<PlayerKnowledge
 
                     try {
                         wrappedStack = context.deserialize(jsonElement, WrappedStack.class);
-                    }
-                    catch (JsonParseException e){
-                    }
+                    } catch (JsonParseException e) {}
 
                     if (wrappedStack != null && wrappedStack.getWrappedObject() instanceof ItemStack) {
                         knownItemStacks.add((ItemStack) wrappedStack.getWrappedObject());

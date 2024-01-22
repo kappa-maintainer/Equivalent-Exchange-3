@@ -17,19 +17,18 @@ public class AbilityEvent extends Event {
     public AbilityEvent(Object object) {
         this.object = object;
     }
+
     @Override
-    public boolean isCancelable()
-    {
+    public boolean isCancelable() {
         return true;
     }
 
     /**
      * @deprecated See {@link com.pahimar.ee3.api.event.BlacklistEvent.KnowledgeWhitelistEvent}
      */
-    public static class SetLearnableEvent extends AbilityEvent
-    {
-        public SetLearnableEvent(Object object)
-        {
+    public static class SetLearnableEvent extends AbilityEvent {
+
+        public SetLearnableEvent(Object object) {
             super(object);
         }
     }
@@ -37,10 +36,9 @@ public class AbilityEvent extends Event {
     /**
      * @deprecated See {@link com.pahimar.ee3.api.event.BlacklistEvent.KnowledgeBlacklistEvent}
      */
-    public static class SetNotLearnableEvent extends AbilityEvent
-    {
-        public SetNotLearnableEvent(Object object)
-        {
+    public static class SetNotLearnableEvent extends AbilityEvent {
+
+        public SetNotLearnableEvent(Object object) {
             super(object);
         }
     }
@@ -48,10 +46,9 @@ public class AbilityEvent extends Event {
     /**
      * @deprecated See {@link com.pahimar.ee3.api.event.BlacklistEvent.ExchangeWhitelistEvent}
      */
-    public static class SetRecoverableEvent extends AbilityEvent
-    {
-        public SetRecoverableEvent(Object object)
-        {
+    public static class SetRecoverableEvent extends AbilityEvent {
+
+        public SetRecoverableEvent(Object object) {
             super(object);
         }
     }
@@ -59,10 +56,9 @@ public class AbilityEvent extends Event {
     /**
      * @deprecated See {@link com.pahimar.ee3.api.event.BlacklistEvent.ExchangeBlacklistEvent}
      */
-    public static class SetNotRecoverableEvent extends AbilityEvent
-    {
-        public SetNotRecoverableEvent(Object object)
-        {
+    public static class SetNotRecoverableEvent extends AbilityEvent {
+
+        public SetNotRecoverableEvent(Object object) {
             super(object);
         }
     }

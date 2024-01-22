@@ -1,16 +1,18 @@
 package com.pahimar.ee3.handler;
 
+import static com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy.Blacklist;
+
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+
 import com.pahimar.ee3.network.PacketHandler;
 import com.pahimar.ee3.network.message.MessageChalkSettings;
 import com.pahimar.ee3.network.message.MessageSyncBlacklist;
 import com.pahimar.ee3.network.message.MessageSyncEnergyValues;
 import com.pahimar.ee3.settings.ChalkSettings;
 import com.pahimar.ee3.util.EntityHelper;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 
-import static com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy.Blacklist;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerEventHandler {
 

@@ -1,21 +1,26 @@
 package com.pahimar.ee3.inventory;
 
-import com.pahimar.ee3.knowledge.PlayerKnowledge;
-import com.pahimar.ee3.reference.Comparators;
-import com.pahimar.ee3.reference.Names;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import com.pahimar.ee3.knowledge.PlayerKnowledge;
+import com.pahimar.ee3.reference.Comparators;
+import com.pahimar.ee3.reference.Names;
 
 public class InventoryTransmutationTablet implements IInventory {
 
     private ItemStack[] inventory;
     private Set<ItemStack> knownTransmutations;
 
-    public InventoryTransmutationTablet()
-    {
+    public InventoryTransmutationTablet() {
         this(Collections.emptySet());
     }
 
@@ -37,9 +42,9 @@ public class InventoryTransmutationTablet implements IInventory {
 
         if (knownTransmutationsList.size() <= 30) {
             inventory = knownTransmutationsList.toArray(inventory);
-        }
-        else {
-            inventory = knownTransmutationsList.subList(0, 30).toArray(inventory);
+        } else {
+            inventory = knownTransmutationsList.subList(0, 30)
+                .toArray(inventory);
         }
 
         for (int i = 0; i < inventory.length; i++) {
@@ -76,8 +81,7 @@ public class InventoryTransmutationTablet implements IInventory {
         if (itemStack != null) {
             if (itemStack.stackSize <= decrementAmount) {
                 setInventorySlotContents(slotIndex, null);
-            }
-            else {
+            } else {
                 itemStack = itemStack.splitStack(decrementAmount);
 
                 if (itemStack.stackSize == 0) {
@@ -99,8 +103,7 @@ public class InventoryTransmutationTablet implements IInventory {
             ItemStack itemStack = inventory[slotIndex];
             inventory[slotIndex] = null;
             return itemStack;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -115,8 +118,7 @@ public class InventoryTransmutationTablet implements IInventory {
                 ItemStack copiedItemStack = itemStack.copy();
                 copiedItemStack.stackSize = 1;
                 inventory[slotIndex] = copiedItemStack;
-            }
-            else {
+            } else {
                 inventory[slotIndex] = itemStack;
             }
         }

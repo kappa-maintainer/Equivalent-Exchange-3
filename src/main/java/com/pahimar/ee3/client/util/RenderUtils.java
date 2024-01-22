@@ -1,31 +1,39 @@
 package com.pahimar.ee3.client.util;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderUtils {
 
     public static void bindTexture(ResourceLocation texture) {
-        FMLClientHandler.instance().getClient().getTextureManager().bindTexture(texture);
+        FMLClientHandler.instance()
+            .getClient()
+            .getTextureManager()
+            .bindTexture(texture);
     }
 
     public static int getCenteredTextOffset(FontRenderer fontRenderer, String string, int width) {
         return (width - fontRenderer.getStringWidth(string)) / 2;
     }
 
-    public static void renderItemIntoGUI(FontRenderer fontRenderer, ItemStack itemStack, int x, int y, float opacity, float scale, int zLevel) {
+    public static void renderItemIntoGUI(FontRenderer fontRenderer, ItemStack itemStack, int x, int y, float opacity,
+        float scale, int zLevel) {
 
         IIcon icon = itemStack.getIconIndex();
         GL11.glDisable(GL11.GL_LIGHTING);
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationItemsTexture);
-        int overlayColour = itemStack.getItem().getColorFromItemStack(itemStack, 0);
+        FMLClientHandler.instance()
+            .getClient().renderEngine.bindTexture(TextureMap.locationItemsTexture);
+        int overlayColour = itemStack.getItem()
+            .getColorFromItemStack(itemStack, 0);
         float red = (overlayColour >> 16 & 255) / 255.0F;
         float green = (overlayColour >> 8 & 255) / 255.0F;
         float blue = (overlayColour & 255) / 255.0F;
@@ -42,7 +50,8 @@ public class RenderUtils {
 
     public static void renderQuad(ResourceLocation texture) {
 
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
+        FMLClientHandler.instance()
+            .getClient().renderEngine.bindTexture(texture);
         Tessellator tessellator = Tessellator.instance;
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glEnable(GL11.GL_BLEND);
@@ -61,7 +70,8 @@ public class RenderUtils {
     public static void renderPulsingQuad(ResourceLocation texture, float maxTransparency) {
 
         float pulseTransparency = (float) getPulseValue() * maxTransparency;
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
+        FMLClientHandler.instance()
+            .getClient().renderEngine.bindTexture(texture);
         Tessellator tessellator = Tessellator.instance;
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glEnable(GL11.GL_BLEND);

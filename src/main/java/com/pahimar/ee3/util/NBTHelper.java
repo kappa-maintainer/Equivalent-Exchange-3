@@ -1,10 +1,19 @@
 package com.pahimar.ee3.util;
 
-import com.pahimar.ee3.reference.Names;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.*;
-
 import java.util.UUID;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagLong;
+import net.minecraft.nbt.NBTTagShort;
+import net.minecraft.nbt.NBTTagString;
+
+import com.pahimar.ee3.reference.Names;
 
 public class NBTHelper {
 
@@ -12,11 +21,9 @@ public class NBTHelper {
 
         if (NBTHelper.hasKey(itemStack, Names.NBT.CRAFTING_GUI_OPEN)) {
             NBTHelper.removeTag(itemStack, Names.NBT.CRAFTING_GUI_OPEN);
-        }
-        else if (NBTHelper.hasKey(itemStack, Names.NBT.TRANSMUTATION_GUI_OPEN)) {
+        } else if (NBTHelper.hasKey(itemStack, Names.NBT.TRANSMUTATION_GUI_OPEN)) {
             NBTHelper.removeTag(itemStack, Names.NBT.TRANSMUTATION_GUI_OPEN);
-        }
-        else if (NBTHelper.hasKey(itemStack, Names.NBT.ALCHEMICAL_BAG_GUI_OPEN)) {
+        } else if (NBTHelper.hasKey(itemStack, Names.NBT.ALCHEMICAL_BAG_GUI_OPEN)) {
             NBTHelper.removeTag(itemStack, Names.NBT.ALCHEMICAL_BAG_GUI_OPEN);
         }
     }
@@ -33,7 +40,8 @@ public class NBTHelper {
     }
 
     public static boolean hasUUID(ItemStack itemStack) {
-        return getLong(itemStack, Names.NBT.UUID_MOST_SIG) != null && getLong(itemStack, Names.NBT.UUID_LEAST_SIG) != null;
+        return getLong(itemStack, Names.NBT.UUID_MOST_SIG) != null
+            && getLong(itemStack, Names.NBT.UUID_LEAST_SIG) != null;
     }
 
     public static UUID getUUID(ItemStack itemStack) {
@@ -76,7 +84,8 @@ public class NBTHelper {
     public static String getString(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagString) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagString) {
                 return itemStack.stackTagCompound.getString(keyName);
             }
         }
@@ -96,7 +105,8 @@ public class NBTHelper {
     public static Boolean getBoolean(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagByte) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagByte) {
                 itemStack.stackTagCompound.getBoolean(keyName);
             }
         }
@@ -116,7 +126,8 @@ public class NBTHelper {
     public static Byte getByte(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagByte) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagByte) {
                 return itemStack.stackTagCompound.getByte(keyName);
             }
         }
@@ -136,7 +147,8 @@ public class NBTHelper {
     public static Short getShort(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagShort) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagShort) {
                 return itemStack.stackTagCompound.getShort(keyName);
             }
         }
@@ -156,7 +168,8 @@ public class NBTHelper {
     public static Integer getInteger(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagInt) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagInt) {
                 return itemStack.stackTagCompound.getInteger(keyName);
             }
         }
@@ -176,7 +189,8 @@ public class NBTHelper {
     public static Long getLong(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagLong) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagLong) {
                 return itemStack.stackTagCompound.getLong(keyName);
             }
         }
@@ -197,7 +211,8 @@ public class NBTHelper {
     public static Float getFloat(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagFloat) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagFloat) {
                 return itemStack.stackTagCompound.getFloat(keyName);
             }
         }
@@ -217,7 +232,8 @@ public class NBTHelper {
     public static Double getDouble(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagDouble) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagDouble) {
                 return itemStack.stackTagCompound.getDouble(keyName);
             }
         }
@@ -237,7 +253,8 @@ public class NBTHelper {
     public static NBTTagList getTagList(ItemStack itemStack, String keyName, int nbtBaseType) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagList) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagList) {
                 return itemStack.stackTagCompound.getTagList(keyName, nbtBaseType);
             }
         }
@@ -257,7 +274,8 @@ public class NBTHelper {
     public static NBTTagCompound getTagCompound(ItemStack itemStack, String keyName) {
 
         if (hasKey(itemStack, keyName)) {
-            if (itemStack.getTagCompound().getTag(keyName) instanceof NBTTagCompound) {
+            if (itemStack.getTagCompound()
+                .getTag(keyName) instanceof NBTTagCompound) {
                 return itemStack.stackTagCompound.getCompoundTag(keyName);
             }
         }

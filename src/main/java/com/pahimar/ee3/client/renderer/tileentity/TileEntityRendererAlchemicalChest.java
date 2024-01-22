@@ -1,44 +1,39 @@
 package com.pahimar.ee3.client.renderer.tileentity;
 
-import com.pahimar.ee3.reference.Textures;
-import com.pahimar.ee3.tileentity.TileEntityAlchemicalChest;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.pahimar.ee3.reference.Textures;
+import com.pahimar.ee3.tileentity.TileEntityAlchemicalChest;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 @SideOnly(Side.CLIENT)
-public class TileEntityRendererAlchemicalChest extends TileEntitySpecialRenderer
-{
+public class TileEntityRendererAlchemicalChest extends TileEntitySpecialRenderer {
+
     private final ModelChest modelChest = new ModelChest();
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float tick)
-    {
-        if (tileEntity instanceof TileEntityAlchemicalChest)
-        {
+    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float tick) {
+        if (tileEntity instanceof TileEntityAlchemicalChest) {
             TileEntityAlchemicalChest tileEntityAlchemicalChest = (TileEntityAlchemicalChest) tileEntity;
             ForgeDirection direction = null;
 
-            if (tileEntityAlchemicalChest.getWorldObj() != null)
-            {
+            if (tileEntityAlchemicalChest.getWorldObj() != null) {
                 direction = tileEntityAlchemicalChest.getOrientation();
             }
 
-            if (tileEntityAlchemicalChest.getState() == 0)
-            {
+            if (tileEntityAlchemicalChest.getState() == 0) {
                 this.bindTexture(Textures.Model.ALCHEMICAL_CHEST_SMALL);
-            }
-            else if (tileEntityAlchemicalChest.getState() == 1)
-            {
+            } else if (tileEntityAlchemicalChest.getState() == 1) {
                 this.bindTexture(Textures.Model.ALCHEMICAL_CHEST_MEDIUM);
-            }
-            else if (tileEntityAlchemicalChest.getState() == 2)
-            {
+            } else if (tileEntityAlchemicalChest.getState() == 2) {
                 this.bindTexture(Textures.Model.ALCHEMICAL_CHEST_LARGE);
             }
 
@@ -50,29 +45,22 @@ public class TileEntityRendererAlchemicalChest extends TileEntitySpecialRenderer
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
             short angle = 0;
 
-            if (direction != null)
-            {
-                if (direction == ForgeDirection.NORTH)
-                {
+            if (direction != null) {
+                if (direction == ForgeDirection.NORTH) {
                     angle = 180;
-                }
-                else if (direction == ForgeDirection.SOUTH)
-                {
+                } else if (direction == ForgeDirection.SOUTH) {
                     angle = 0;
-                }
-                else if (direction == ForgeDirection.WEST)
-                {
+                } else if (direction == ForgeDirection.WEST) {
                     angle = 90;
-                }
-                else if (direction == ForgeDirection.EAST)
-                {
+                } else if (direction == ForgeDirection.EAST) {
                     angle = -90;
                 }
             }
 
             GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            float adjustedLidAngle = tileEntityAlchemicalChest.prevLidAngle + (tileEntityAlchemicalChest.lidAngle - tileEntityAlchemicalChest.prevLidAngle) * tick;
+            float adjustedLidAngle = tileEntityAlchemicalChest.prevLidAngle
+                + (tileEntityAlchemicalChest.lidAngle - tileEntityAlchemicalChest.prevLidAngle) * tick;
             adjustedLidAngle = 1.0F - adjustedLidAngle;
             adjustedLidAngle = 1.0F - adjustedLidAngle * adjustedLidAngle * adjustedLidAngle;
             modelChest.chestLid.rotateAngleX = -(adjustedLidAngle * (float) Math.PI / 2.0F);

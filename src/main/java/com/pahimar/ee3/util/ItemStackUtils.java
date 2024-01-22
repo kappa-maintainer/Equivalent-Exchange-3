@@ -1,11 +1,12 @@
 package com.pahimar.ee3.util;
 
-import com.pahimar.ee3.reference.Comparators;
-import com.pahimar.ee3.reference.Names;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-import java.util.UUID;
+import com.pahimar.ee3.reference.Comparators;
+import com.pahimar.ee3.reference.Names;
 
 public class ItemStackUtils {
 
@@ -15,8 +16,7 @@ public class ItemStackUtils {
             ItemStack clonedItemStack = itemStack.copy();
             clonedItemStack.stackSize = stackSize;
             return clonedItemStack;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -45,10 +45,18 @@ public class ItemStackUtils {
 
         if (itemStack != null) {
             if (itemStack.hasTagCompound()) {
-                return String.format("%sxitemStack[%s@%s:%s]", itemStack.stackSize, itemStack.getUnlocalizedName(), itemStack.getItemDamage(), itemStack.getTagCompound());
-            }
-            else {
-                return String.format("%sxitemStack[%s@%s]", itemStack.stackSize, itemStack.getUnlocalizedName(), itemStack.getItemDamage());
+                return String.format(
+                    "%sxitemStack[%s@%s:%s]",
+                    itemStack.stackSize,
+                    itemStack.getUnlocalizedName(),
+                    itemStack.getItemDamage(),
+                    itemStack.getTagCompound());
+            } else {
+                return String.format(
+                    "%sxitemStack[%s@%s]",
+                    itemStack.stackSize,
+                    itemStack.getUnlocalizedName(),
+                    itemStack.getItemDamage());
             }
         }
 
@@ -67,8 +75,11 @@ public class ItemStackUtils {
 
     public static UUID getOwnerUUID(ItemStack itemStack) {
 
-        if (NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_MOST_SIG) != null && NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_LEAST_SIG) != null) {
-            return new UUID(NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_MOST_SIG), NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_LEAST_SIG));
+        if (NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_MOST_SIG) != null
+            && NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_LEAST_SIG) != null) {
+            return new UUID(
+                NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_MOST_SIG),
+                NBTHelper.getLong(itemStack, Names.NBT.OWNER_UUID_LEAST_SIG));
         }
 
         return null;
@@ -76,8 +87,16 @@ public class ItemStackUtils {
 
     public static void setOwnerUUID(ItemStack itemStack, EntityPlayer entityPlayer) {
 
-        NBTHelper.setLong(itemStack, Names.NBT.OWNER_UUID_MOST_SIG, entityPlayer.getUniqueID().getMostSignificantBits());
-        NBTHelper.setLong(itemStack, Names.NBT.OWNER_UUID_LEAST_SIG, entityPlayer.getUniqueID().getLeastSignificantBits());
+        NBTHelper.setLong(
+            itemStack,
+            Names.NBT.OWNER_UUID_MOST_SIG,
+            entityPlayer.getUniqueID()
+                .getMostSignificantBits());
+        NBTHelper.setLong(
+            itemStack,
+            Names.NBT.OWNER_UUID_LEAST_SIG,
+            entityPlayer.getUniqueID()
+                .getLeastSignificantBits());
     }
 
     public static void setOwnerName(ItemStack itemStack, EntityPlayer entityPlayer) {

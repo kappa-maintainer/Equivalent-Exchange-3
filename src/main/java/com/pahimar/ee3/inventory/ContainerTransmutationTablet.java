@@ -1,5 +1,19 @@
 package com.pahimar.ee3.inventory;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy;
 import com.pahimar.ee3.api.exchange.EnergyValue;
 import com.pahimar.ee3.api.exchange.EnergyValueRegistryProxy;
@@ -17,23 +31,16 @@ import com.pahimar.ee3.tileentity.TileEntityTransmutationTablet;
 import com.pahimar.ee3.util.FilterUtils;
 import com.pahimar.ee3.util.ItemStackUtils;
 import com.pahimar.repackage.cofh.lib.util.helpers.MathHelper;
+
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-import java.util.*;
 
 /**
  * FIXME Continue integrating PR#881
  */
-public class ContainerTransmutationTablet extends ContainerEE implements IElementTextFieldHandler, IElementSliderHandler, IElementButtonHandler {
+public class ContainerTransmutationTablet extends ContainerEE
+    implements IElementTextFieldHandler, IElementSliderHandler, IElementButtonHandler {
 
     private InventoryTransmutationTablet inventoryTransmutationTablet;
     private final TileEntityTransmutationTablet transmutationTablet;
@@ -42,7 +49,8 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
     private String searchTerm;
     private int sortOption, sortOrder, scrollBarPosition;
 
-    public ContainerTransmutationTablet(InventoryPlayer inventoryPlayer, TileEntityTransmutationTablet transmutationTablet) {
+    public ContainerTransmutationTablet(InventoryPlayer inventoryPlayer,
+        TileEntityTransmutationTablet transmutationTablet) {
 
         this.transmutationTablet = transmutationTablet;
         this.world = transmutationTablet.getWorldObj();
@@ -53,15 +61,24 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
         this.scrollBarPosition = 0;
         this.energyValue = transmutationTablet.getAvailableEnergy();
 
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_1, 62, 24));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_2, 35, 35));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_3, 26, 61));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_4, 35, 87));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_5, 62, 99));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_6, 89, 87));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_7, 98, 61));
-        this.addSlotToContainer(new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_8, 89, 35));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_1, 62, 24));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_2, 35, 35));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_3, 26, 61));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_4, 35, 87));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_5, 62, 99));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_6, 89, 87));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_7, 98, 61));
+        this.addSlotToContainer(
+            new SlotTabletInput(this, transmutationTablet, TileEntityTransmutationTablet.ITEM_INPUT_8, 89, 35));
         this.addSlotToContainer(new Slot(transmutationTablet, TileEntityTransmutationTablet.STONE_INDEX, 62, 61) {
+
             @Override
             public int getSlotStackLimit() {
                 return 1;
@@ -69,21 +86,30 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
 
             @Override
             public boolean isItemValid(ItemStack itemStack) {
-                return itemStack.getItem() instanceof ItemMiniumStone || itemStack.getItem() instanceof ItemPhilosophersStone;
+                return itemStack.getItem() instanceof ItemMiniumStone
+                    || itemStack.getItem() instanceof ItemPhilosophersStone;
             }
         });
-        this.addSlotToContainer(new SlotAlchenomicon(transmutationTablet, TileEntityTransmutationTablet.ALCHENOMICON_INDEX, 152, 15));
+        this.addSlotToContainer(
+            new SlotAlchenomicon(transmutationTablet, TileEntityTransmutationTablet.ALCHENOMICON_INDEX, 152, 15));
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 3; j++) {
-                this.addSlotToContainer(new SlotTabletOutput(this, inventoryTransmutationTablet, i * 3 + j, 175 + j * 20, 38 + i * 20));
+                this.addSlotToContainer(
+                    new SlotTabletOutput(this, inventoryTransmutationTablet, i * 3 + j, 175 + j * 20, 38 + i * 20));
             }
         }
 
         // Add the player's inventory slots to the container
         for (int inventoryRowIndex = 0; inventoryRowIndex < PLAYER_INVENTORY_ROWS; ++inventoryRowIndex) {
-            for (int inventoryColumnIndex = 0; inventoryColumnIndex < PLAYER_INVENTORY_COLUMNS; ++inventoryColumnIndex) {
-                this.addSlotToContainer(new Slot(inventoryPlayer, inventoryColumnIndex + inventoryRowIndex * 9 + 9, 8 + inventoryColumnIndex * 18, 164 + inventoryRowIndex * 18));
+            for (int inventoryColumnIndex = 0; inventoryColumnIndex
+                < PLAYER_INVENTORY_COLUMNS; ++inventoryColumnIndex) {
+                this.addSlotToContainer(
+                    new Slot(
+                        inventoryPlayer,
+                        inventoryColumnIndex + inventoryRowIndex * 9 + 9,
+                        8 + inventoryColumnIndex * 18,
+                        164 + inventoryRowIndex * 18));
             }
         }
 
@@ -133,19 +159,15 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
             int energyValueAsInt = Float.floatToRawIntBits(energyValue.getValue());
             energyValueAsInt = (energyValueAsInt & 0xffff0000) | updatedValue;
             energyValue = new EnergyValue(Float.intBitsToFloat(energyValueAsInt));
-        }
-        else if (valueType == 1) {
+        } else if (valueType == 1) {
             int energyValueAsInt = Float.floatToRawIntBits(energyValue.getValue());
             energyValueAsInt = (energyValueAsInt & 0xffff) | (updatedValue << 16);
             energyValue = new EnergyValue(Float.intBitsToFloat(energyValueAsInt));
-        }
-        else if (valueType == 2) {
+        } else if (valueType == 2) {
             sortOption = updatedValue;
-        }
-        else if (valueType == 3) {
+        } else if (valueType == 3) {
             scrollBarPosition = updatedValue;
-        }
-        else if (valueType == 4) {
+        } else if (valueType == 4) {
             sortOrder = updatedValue;
         }
 
@@ -157,26 +179,31 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
     private void sendKnowledgeToClient(Collection<ItemStack> knownItemStacks) {
 
         PacketHandler.INSTANCE.sendToAllAround(
-                new MessagePlayerKnowledge(transmutationTablet, knownItemStacks),
-                new NetworkRegistry.TargetPoint(world.provider.dimensionId, transmutationTablet.xCoord, transmutationTablet.yCoord, transmutationTablet.zCoord, 5d)
-        );
+            new MessagePlayerKnowledge(transmutationTablet, knownItemStacks),
+            new NetworkRegistry.TargetPoint(
+                world.provider.dimensionId,
+                transmutationTablet.xCoord,
+                transmutationTablet.yCoord,
+                transmutationTablet.zCoord,
+                5d));
     }
 
     private void handleTomeSync(ItemStack itemStack) {
 
-        if (itemStack != null && itemStack.getItem() instanceof ItemAlchenomicon && ItemStackUtils.getOwnerName(itemStack) != null) {
+        if (itemStack != null && itemStack.getItem() instanceof ItemAlchenomicon
+            && ItemStackUtils.getOwnerName(itemStack) != null) {
 
             if (!world.isRemote) {
 
-                Set<ItemStack> knownItemStacks = PlayerKnowledgeRegistryProxy.getKnownItemStacks(ItemStackUtils.getOwnerName(itemStack));
+                Set<ItemStack> knownItemStacks = PlayerKnowledgeRegistryProxy
+                    .getKnownItemStacks(ItemStackUtils.getOwnerName(itemStack));
                 inventoryTransmutationTablet = new InventoryTransmutationTablet(knownItemStacks);
                 sendKnowledgeToClient(knownItemStacks);
+            } else {
+                this.inventoryTransmutationTablet = new InventoryTransmutationTablet(
+                    transmutationTablet.getPlayerKnowledge());
             }
-            else {
-                this.inventoryTransmutationTablet = new InventoryTransmutationTablet(transmutationTablet.getPlayerKnowledge());
-            }
-        }
-        else {
+        } else {
 
             this.inventoryTransmutationTablet = new InventoryTransmutationTablet();
             if (!world.isRemote) {
@@ -204,28 +231,26 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
     }
 
     private void updateInventory() {
-        
+
         ItemStack[] newInventory = new ItemStack[30];
 
-        Set<ItemStack> filteredSet = FilterUtils.filterByDisplayName(inventoryTransmutationTablet.getKnownTransmutations(), searchTerm, FilterUtils.NameFilterType.CONTAINS);
+        Set<ItemStack> filteredSet = FilterUtils.filterByDisplayName(
+            inventoryTransmutationTablet.getKnownTransmutations(),
+            searchTerm,
+            FilterUtils.NameFilterType.CONTAINS);
         List<ItemStack> filteredList = new ArrayList<>(FilterUtils.filterByEnergyValue(filteredSet, energyValue));
 
         if (sortOption == 0 && sortOrder == 0) {
             Collections.sort(filteredList, Comparators.DISPLAY_NAME_COMPARATOR);
-        }
-        else if (sortOption == 0 && sortOrder == 1) {
+        } else if (sortOption == 0 && sortOrder == 1) {
             Collections.sort(filteredList, Comparators.DISPLAY_NAME_COMPARATOR.reversed());
-        }
-        else if (sortOption == 1 && sortOrder == 0) {
+        } else if (sortOption == 1 && sortOrder == 0) {
             Collections.sort(filteredList, Comparators.ENERGY_VALUE_ITEM_STACK_COMPARATOR);
-        }
-        else if (sortOption == 1 && sortOrder == 1) {
+        } else if (sortOption == 1 && sortOrder == 1) {
             Collections.sort(filteredList, Comparators.ENERGY_VALUE_ITEM_STACK_COMPARATOR.reversed());
-        }
-        else if (sortOption == 2 && sortOrder == 0) {
+        } else if (sortOption == 2 && sortOrder == 0) {
             Collections.sort(filteredList, Comparators.ID_COMPARATOR);
-        }
-        else if (sortOption == 2 && sortOrder == 1) {
+        } else if (sortOption == 2 && sortOrder == 1) {
             Collections.sort(filteredList, Comparators.ID_COMPARATOR.reversed());
         }
 
@@ -239,10 +264,12 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
         int startIndex = Math.max(0, Math.min(adjustedStartIndex, filteredList.size() - 30));
         int endIndex = Math.min(adjustedStartIndex + 30, filteredList.size());
 
-        filteredList.subList(startIndex, endIndex).toArray(newInventory);
+        filteredList.subList(startIndex, endIndex)
+            .toArray(newInventory);
 
         for (int i = 0; i < 30; i++) {
-            this.getSlot(i + 10).putStack(newInventory[i]);
+            this.getSlot(i + 10)
+                .putStack(newInventory[i]);
         }
     }
 
@@ -264,42 +291,55 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
              */
             if (slotIndex < TileEntityTransmutationTablet.INVENTORY_SIZE) {
 
-                if (!this.mergeItemStack(slotItemStack, TileEntityTransmutationTablet.INVENTORY_SIZE, inventorySlots.size(), false)) {
+                if (!this.mergeItemStack(
+                    slotItemStack,
+                    TileEntityTransmutationTablet.INVENTORY_SIZE,
+                    inventorySlots.size(),
+                    false)) {
                     return null;
                 }
-            }
-            else if (slotIndex >= TileEntityTransmutationTablet.INVENTORY_SIZE && slotIndex < 40) {
+            } else if (slotIndex >= TileEntityTransmutationTablet.INVENTORY_SIZE && slotIndex < 40) {
 
-                if (!this.mergeTransmutedItemStack(entityPlayer, slot, slotItemStack, 40, inventorySlots.size(), false)) {
+                if (!this
+                    .mergeTransmutedItemStack(entityPlayer, slot, slotItemStack, 40, inventorySlots.size(), false)) {
                     return null;
                 }
-            }
-            else {
+            } else {
 
                 if (slotItemStack.getItem() instanceof ItemAlchenomicon) {
 
-                    if (!this.mergeItemStack(slotItemStack, TileEntityTransmutationTablet.ALCHENOMICON_INDEX, TileEntityTransmutationTablet.INVENTORY_SIZE, false)) {
+                    if (!this.mergeItemStack(
+                        slotItemStack,
+                        TileEntityTransmutationTablet.ALCHENOMICON_INDEX,
+                        TileEntityTransmutationTablet.INVENTORY_SIZE,
+                        false)) {
                         return null;
                     }
-                }
-                else if (slotItemStack.getItem() instanceof ItemMiniumStone || slotItemStack.getItem() instanceof ItemPhilosophersStone) {
+                } else if (slotItemStack.getItem() instanceof ItemMiniumStone
+                    || slotItemStack.getItem() instanceof ItemPhilosophersStone) {
 
-                    if (!this.mergeItemStack(slotItemStack, TileEntityTransmutationTablet.STONE_INDEX, TileEntityTransmutationTablet.INVENTORY_SIZE, false)) {
-                        return null;
-                    }
-                }
-                else {
+                        if (!this.mergeItemStack(
+                            slotItemStack,
+                            TileEntityTransmutationTablet.STONE_INDEX,
+                            TileEntityTransmutationTablet.INVENTORY_SIZE,
+                            false)) {
+                            return null;
+                        }
+                    } else {
 
-                    if (!this.mergeItemStack(slotItemStack, TileEntityTransmutationTablet.ITEM_INPUT_1, TileEntityTransmutationTablet.INVENTORY_SIZE, false)) {
-                        return null;
+                        if (!this.mergeItemStack(
+                            slotItemStack,
+                            TileEntityTransmutationTablet.ITEM_INPUT_1,
+                            TileEntityTransmutationTablet.INVENTORY_SIZE,
+                            false)) {
+                            return null;
+                        }
                     }
-                }
             }
 
             if (slotItemStack.stackSize == 0) {
                 slot.putStack(null);
-            }
-            else {
+            } else {
                 slot.onSlotChanged();
             }
         }
@@ -307,10 +347,15 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
         return itemStack;
     }
 
-    private boolean mergeTransmutedItemStack(EntityPlayer entityPlayer, Slot transmutationOutputSlot, ItemStack itemStack, int slotMin, int slotMax, boolean ascending) {
+    private boolean mergeTransmutedItemStack(EntityPlayer entityPlayer, Slot transmutationOutputSlot,
+        ItemStack itemStack, int slotMin, int slotMax, boolean ascending) {
 
         // Calculate how many items can be transmuted
-        int numCanTransmute = MathHelper.floor(this.transmutationTablet.getAvailableEnergy().getValue() / EnergyValueRegistryProxy.getEnergyValue(itemStack).getValue());
+        int numCanTransmute = MathHelper.floor(
+            this.transmutationTablet.getAvailableEnergy()
+                .getValue()
+                / EnergyValueRegistryProxy.getEnergyValue(itemStack)
+                    .getValue());
         int numTransmuted = 0;
 
         ItemStack itemStack1 = itemStack.copy();
@@ -325,7 +370,8 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
         Slot slot;
         ItemStack stackInSlot;
 
-        while (itemStack1.stackSize > 0 && (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin)) {
+        while (itemStack1.stackSize > 0
+            && (!ascending && currentSlotIndex < slotMax || ascending && currentSlotIndex >= slotMin)) {
 
             slot = (Slot) this.inventorySlots.get(currentSlotIndex);
             stackInSlot = slot.getStack();
@@ -338,8 +384,7 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
                 numTransmuted = itemStack1.stackSize;
                 itemStack1.stackSize = 0;
                 slot.onSlotChanged();
-            }
-            else if (slot.isItemValid(itemStack1) && ItemStackUtils.equalsIgnoreStackSize(itemStack1, stackInSlot)) {
+            } else if (slot.isItemValid(itemStack1) && ItemStackUtils.equalsIgnoreStackSize(itemStack1, stackInSlot)) {
 
                 int slotStackSizeLimit = Math.min(stackInSlot.getMaxStackSize(), slot.getSlotStackLimit());
                 int combinedStackSize = stackInSlot.stackSize + itemStack1.stackSize;
@@ -350,8 +395,7 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
                     numTransmuted = itemStack1.stackSize;
                     itemStack1.stackSize = 0;
                     slot.onSlotChanged();
-                }
-                else if (stackInSlot.stackSize < slotStackSizeLimit) {
+                } else if (stackInSlot.stackSize < slotStackSizeLimit) {
 
                     itemStack1.stackSize = slotStackSizeLimit - stackInSlot.stackSize;
                     stackInSlot.stackSize = slotStackSizeLimit;
@@ -364,7 +408,8 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
             currentSlotIndex += ascending ? -1 : 1;
         }
 
-        ((SlotTabletOutput) transmutationOutputSlot).onShiftPickupFromSlot(entityPlayer, ItemStackUtils.clone(itemStack, numTransmuted));
+        ((SlotTabletOutput) transmutationOutputSlot)
+            .onShiftPickupFromSlot(entityPlayer, ItemStackUtils.clone(itemStack, numTransmuted));
 
         return false;
     }
@@ -375,12 +420,10 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
         if (elementName.equals("sortOption")) {
             if (mouseButton == 0) {
                 sortOption = (sortOption + 1) % 3;
-            }
-            else if (mouseButton == 1) {
+            } else if (mouseButton == 1) {
                 sortOption = (sortOption + (3 - 1)) % 3;
             }
-        }
-        else if (elementName.equals("sortOrder")) {
+        } else if (elementName.equals("sortOrder")) {
             sortOrder = 1 - sortOrder; // Toggle between 0 and 1
         }
 
@@ -395,11 +438,11 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
     @Override
     public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
 
-    	if (button == 0 && flag == 6) {
-    		return null;
-    	}
+        if (button == 0 && flag == 6) {
+            return null;
+        }
 
-    	return super.slotClick(slot, button, flag, player);
+        return super.slotClick(slot, button, flag, player);
     }
 
     private class SlotAlchenomicon extends Slot {
@@ -431,7 +474,8 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
 
         private ContainerTransmutationTablet containerTransmutationTablet;
 
-        public SlotTabletOutput(ContainerTransmutationTablet containerTransmutationTablet, IInventory iInventory, int slotIndex, int x, int y) {
+        public SlotTabletOutput(ContainerTransmutationTablet containerTransmutationTablet, IInventory iInventory,
+            int slotIndex, int x, int y) {
 
             super(iInventory, slotIndex, x, y);
             this.containerTransmutationTablet = containerTransmutationTablet;
@@ -489,7 +533,8 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
 
         private ContainerTransmutationTablet containerTransmutationTablet;
 
-        public SlotTabletInput(ContainerTransmutationTablet containerTransmutationTablet, IInventory iInventory, int slotIndex, int x, int y) {
+        public SlotTabletInput(ContainerTransmutationTablet containerTransmutationTablet, IInventory iInventory,
+            int slotIndex, int x, int y) {
 
             super(iInventory, slotIndex, x, y);
             this.containerTransmutationTablet = containerTransmutationTablet;
@@ -497,7 +542,8 @@ public class ContainerTransmutationTablet extends ContainerEE implements IElemen
 
         @Override
         public boolean isItemValid(ItemStack itemStack) {
-            return EnergyValueRegistryProxy.hasEnergyValue(itemStack) && BlacklistRegistryProxy.isExchangeable(itemStack);
+            return EnergyValueRegistryProxy.hasEnergyValue(itemStack)
+                && BlacklistRegistryProxy.isExchangeable(itemStack);
         }
 
         @Override

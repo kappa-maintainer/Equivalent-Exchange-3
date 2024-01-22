@@ -1,5 +1,8 @@
 package com.pahimar.ee3.client.gui.inventory;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.StatCollector;
+
 import com.pahimar.ee3.client.gui.element.ElementSearchField;
 import com.pahimar.ee3.client.gui.element.ElementStatefulButton;
 import com.pahimar.ee3.inventory.ContainerTransmutationTablet;
@@ -15,10 +18,9 @@ import com.pahimar.repackage.cofh.lib.gui.GuiColor;
 import com.pahimar.repackage.cofh.lib.gui.element.ElementSlider;
 import com.pahimar.repackage.cofh.lib.gui.element.ElementTextField;
 import com.pahimar.repackage.cofh.lib.render.RenderHelper;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.StatCollector;
 
 @SideOnly(Side.CLIENT)
 public class GuiTransmutationTablet extends GuiBase {
@@ -41,17 +43,18 @@ public class GuiTransmutationTablet extends GuiBase {
     private static final int SORT_ASCENDING = 0;
     private static final int SORT_DESCENDING = 1;
 
-    public GuiTransmutationTablet(InventoryPlayer inventoryPlayer, TileEntityTransmutationTablet tileEntityTransmutationTablet)
-    {
-        super(new ContainerTransmutationTablet(inventoryPlayer, tileEntityTransmutationTablet), Textures.Gui.TRANSMUTATION_TABLET);
+    public GuiTransmutationTablet(InventoryPlayer inventoryPlayer,
+        TileEntityTransmutationTablet tileEntityTransmutationTablet) {
+        super(
+            new ContainerTransmutationTablet(inventoryPlayer, tileEntityTransmutationTablet),
+            Textures.Gui.TRANSMUTATION_TABLET);
         this.containerTablet = (ContainerTransmutationTablet) this.inventorySlots;
         xSize = 256;
         ySize = 256;
     }
 
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
 
         this.drawTitle = false;
@@ -61,44 +64,62 @@ public class GuiTransmutationTablet extends GuiBase {
         searchTextField.backgroundColor = new GuiColor(0, 0, 0, 0).getColor();
         searchTextField.borderColor = new GuiColor(0, 0, 0, 0).getColor();
 
-        sortOptionButton = new ElementStatefulButton(this, 151, 36, "sortOption", 0, 0, 18, 0, 36, 0, 18, 18, 54, 18, Textures.Gui.Elements.BUTTON_SORT_OPTION)
-        {
+        sortOptionButton = new ElementStatefulButton(
+            this,
+            151,
+            36,
+            "sortOption",
+            0,
+            0,
+            18,
+            0,
+            36,
+            0,
+            18,
+            18,
+            54,
+            18,
+            Textures.Gui.Elements.BUTTON_SORT_OPTION) {
+
             @Override
-            public void drawBackground(int mouseX, int mouseY, float gameTicks)
-            {
+            public void drawBackground(int mouseX, int mouseY, float gameTicks) {
                 RenderHelper.bindTexture(texture);
-                if (isEnabled())
-                {
-                    if (getState() == SORT_BY_DISPLAY_NAME)
-                    {
+                if (isEnabled()) {
+                    if (getState() == SORT_BY_DISPLAY_NAME) {
                         drawTexturedModalRect(posX, posY, 36, 0, sizeX, sizeY);
-                    }
-                    else if (getState() == SORT_BY_ENERGY_VALUE)
-                    {
+                    } else if (getState() == SORT_BY_ENERGY_VALUE) {
                         drawTexturedModalRect(posX, posY, 0, 0, sizeX, sizeY);
-                    }
-                    else if (getState() == SORT_BY_ID)
-                    {
+                    } else if (getState() == SORT_BY_ID) {
                         drawTexturedModalRect(posX, posY, 18, 0, sizeX, sizeY);
                     }
                 }
             }
         };
 
-        sortOrderButton = new ElementStatefulButton(this, 151, 58, "sortOrder", 0, 0, 0, 0, 18, 0, 18, 18, 36, 18, Textures.Gui.Elements.BUTTON_SORT_ORDER)
-        {
+        sortOrderButton = new ElementStatefulButton(
+            this,
+            151,
+            58,
+            "sortOrder",
+            0,
+            0,
+            0,
+            0,
+            18,
+            0,
+            18,
+            18,
+            36,
+            18,
+            Textures.Gui.Elements.BUTTON_SORT_ORDER) {
+
             @Override
-            public void drawBackground(int mouseX, int mouseY, float gameTicks)
-            {
+            public void drawBackground(int mouseX, int mouseY, float gameTicks) {
                 RenderHelper.bindTexture(texture);
-                if (isEnabled())
-                {
-                    if (getState() == SORT_ASCENDING)
-                    {
+                if (isEnabled()) {
+                    if (getState() == SORT_ASCENDING) {
                         drawTexturedModalRect(posX, posY, 0, 0, sizeX, sizeY);
-                    }
-                    else if (getState() == SORT_DESCENDING)
-                    {
+                    } else if (getState() == SORT_DESCENDING) {
                         drawTexturedModalRect(posX, posY, 18, 0, sizeX, sizeY);
                     }
                 }
@@ -106,37 +127,30 @@ public class GuiTransmutationTablet extends GuiBase {
         };
         setTooltipByState();
 
-        slider = new ElementSlider(this, "scrollBar", 239, 36, 12, 201, 187, 0)
-        {
+        slider = new ElementSlider(this, "scrollBar", 239, 36, 12, 201, 187, 0) {
+
             @Override
-            protected void dragSlider(int x, int y)
-            {
-                if (y > _value)
-                {
+            protected void dragSlider(int x, int y) {
+                if (y > _value) {
                     setValue(_value + 1);
-                }
-                else
-                {
+                } else {
                     setValue(_value - 1);
                 }
             }
 
             @Override
-            public boolean onMouseWheel(int mouseX, int mouseY, int movement)
-            {
+            public boolean onMouseWheel(int mouseX, int mouseY, int movement) {
                 PacketHandler.INSTANCE.sendToServer(new MessageSliderElementUpdated(this));
                 return super.onMouseWheel(mouseX, mouseY, movement);
             }
 
             @Override
-            public void onStopDragging()
-            {
+            public void onStopDragging() {
                 PacketHandler.INSTANCE.sendToServer(new MessageSliderElementUpdated(this));
             }
 
             @Override
-            public int getSliderY()
-            {
+            public int getSliderY() {
                 return _value;
             }
         };
@@ -151,76 +165,61 @@ public class GuiTransmutationTablet extends GuiBase {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int x, int y)
-    {
+    protected void drawGuiContainerForegroundLayer(int x, int y) {
         super.drawGuiContainerForegroundLayer(x, y);
-        fontRendererObj.drawString(String.format("%s:", StatCollector.translateToLocal(Messages.ENERGY_VALUE)), 10, 142, Integer.parseInt(Colors.PURE_WHITE, 16));
-        fontRendererObj.drawString(String.format("%s", containerTablet.getEnergyValue()), 10, 152, Integer.parseInt(Colors.PURE_WHITE, 16));
+        fontRendererObj.drawString(
+            String.format("%s:", StatCollector.translateToLocal(Messages.ENERGY_VALUE)),
+            10,
+            142,
+            Integer.parseInt(Colors.PURE_WHITE, 16));
+        fontRendererObj.drawString(
+            String.format("%s", containerTablet.getEnergyValue()),
+            10,
+            152,
+            Integer.parseInt(Colors.PURE_WHITE, 16));
     }
 
     @Override
-    public void updateScreen()
-    {
+    public void updateScreen() {
         super.updateScreen();
         tickCount++;
     }
 
     @Override
-    protected boolean checkHotbarKeys(int key)
-    {
+    protected boolean checkHotbarKeys(int key) {
         return false;
     }
 
     @Override
-    public void handleElementButtonClick(String buttonName, int mouseButton)
-    {
-        if (buttonName.equals("sortOption"))
-        {
+    public void handleElementButtonClick(String buttonName, int mouseButton) {
+        if (buttonName.equals("sortOption")) {
             PacketHandler.INSTANCE.sendToServer(new MessageGuiElementClicked(buttonName, mouseButton));
 
-            if (mouseButton == LEFT_MOUSE_BUTTON)
-            {
-                if (sortOptionButton.getState() == SORT_BY_DISPLAY_NAME)
-                {
+            if (mouseButton == LEFT_MOUSE_BUTTON) {
+                if (sortOptionButton.getState() == SORT_BY_DISPLAY_NAME) {
                     sortOptionButton.setState(SORT_BY_ENERGY_VALUE);
-                }
-                else if (sortOptionButton.getState() == SORT_BY_ENERGY_VALUE)
-                {
+                } else if (sortOptionButton.getState() == SORT_BY_ENERGY_VALUE) {
                     sortOptionButton.setState(SORT_BY_ID);
-                }
-                else if (sortOptionButton.getState() == SORT_BY_ID)
-                {
+                } else if (sortOptionButton.getState() == SORT_BY_ID) {
                     sortOptionButton.setState(SORT_BY_DISPLAY_NAME);
                 }
-            }
-            else if (mouseButton == RIGHT_MOUSE_BUTTON)
-            {
-                if (sortOptionButton.getState() == SORT_BY_DISPLAY_NAME)
-                {
+            } else if (mouseButton == RIGHT_MOUSE_BUTTON) {
+                if (sortOptionButton.getState() == SORT_BY_DISPLAY_NAME) {
                     sortOptionButton.setState(SORT_BY_ID);
-                }
-                else if (sortOptionButton.getState() == SORT_BY_ENERGY_VALUE)
-                {
+                } else if (sortOptionButton.getState() == SORT_BY_ENERGY_VALUE) {
                     sortOptionButton.setState(SORT_BY_DISPLAY_NAME);
-                }
-                else if (sortOptionButton.getState() == SORT_BY_ID)
-                {
+                } else if (sortOptionButton.getState() == SORT_BY_ID) {
                     sortOptionButton.setState(SORT_BY_ENERGY_VALUE);
                 }
             }
 
             setTooltipByState();
-        }
-        else if (buttonName.equals("sortOrder"))
-        {
+        } else if (buttonName.equals("sortOrder")) {
             PacketHandler.INSTANCE.sendToServer(new MessageGuiElementClicked(buttonName, mouseButton));
 
-            if (sortOrderButton.getState() == SORT_ASCENDING)
-            {
+            if (sortOrderButton.getState() == SORT_ASCENDING) {
                 sortOrderButton.setState(SORT_DESCENDING);
-            }
-            else if (sortOrderButton.getState() == SORT_DESCENDING)
-            {
+            } else if (sortOrderButton.getState() == SORT_DESCENDING) {
                 sortOrderButton.setState(SORT_ASCENDING);
             }
 
@@ -228,29 +227,20 @@ public class GuiTransmutationTablet extends GuiBase {
         }
     }
 
-    private void setTooltipByState()
-    {
+    private void setTooltipByState() {
         sortOptionButton.clearToolTip();
-        if (sortOptionButton.getState() == SORT_BY_DISPLAY_NAME)
-        {
+        if (sortOptionButton.getState() == SORT_BY_DISPLAY_NAME) {
             sortOptionButton.setToolTip(Messages.Tooltips.SORT_BY_DISPLAY_NAME);
-        }
-        else if (sortOptionButton.getState() == SORT_BY_ENERGY_VALUE)
-        {
+        } else if (sortOptionButton.getState() == SORT_BY_ENERGY_VALUE) {
             sortOptionButton.setToolTip(Messages.Tooltips.SORT_BY_ENERGY_VALUE);
-        }
-        else if (sortOptionButton.getState() == SORT_BY_ID)
-        {
+        } else if (sortOptionButton.getState() == SORT_BY_ID) {
             sortOptionButton.setToolTip(Messages.Tooltips.SORT_BY_ID);
         }
 
         sortOrderButton.clearToolTip();
-        if (sortOrderButton.getState() == SORT_ASCENDING)
-        {
+        if (sortOrderButton.getState() == SORT_ASCENDING) {
             sortOrderButton.setToolTip(Messages.Tooltips.SORT_ASCENDING);
-        }
-        else if (sortOrderButton.getState() == SORT_DESCENDING)
-        {
+        } else if (sortOrderButton.getState() == SORT_DESCENDING) {
             sortOrderButton.setToolTip(Messages.Tooltips.SORT_DESCENDING);
         }
     }

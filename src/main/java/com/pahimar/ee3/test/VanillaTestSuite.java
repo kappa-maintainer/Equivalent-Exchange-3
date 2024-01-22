@@ -1,12 +1,13 @@
 package com.pahimar.ee3.test;
 
-import com.pahimar.ee3.reference.Files;
+import java.io.File;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.io.File;
+import com.pahimar.ee3.reference.Files;
 
 public class VanillaTestSuite extends EnergyValueTestSuite {
 
