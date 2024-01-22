@@ -43,7 +43,7 @@ public class BlacklistRegistry {
     private static final Marker EXCHANGE_WHITELIST_MARKER = MarkerManager
         .getMarker("EE3_EXCHANGE_WHITELIST", EXCHANGE_MARKER);
 
-    private final Set<WrappedStack> knowledgeBlacklist, exchangeBlacklist;
+    private final Set<WrappedStack> knowledgeBlacklist, exchangeBlacklist, defaultKnowledgeBlacklist;
     public static File knowledgeBlacklistFile, exchangeBlacklistFile;
     private transient boolean shouldSave;
 
@@ -54,6 +54,7 @@ public class BlacklistRegistry {
 
         knowledgeBlacklist = new TreeSet<>();
         exchangeBlacklist = new TreeSet<>();
+        defaultKnowledgeBlacklist = new TreeSet<>();
         shouldSave = true;
     }
 
@@ -92,12 +93,14 @@ public class BlacklistRegistry {
             } else {
                 if (EnergyValueRegistryProxy.hasEnergyValue(wrappedObject)) {
 
-                    if (knowledgeBlacklist.contains(wrappedObject)) {
+                    if (knowledgeBlacklist.contains(wrappedObject)
+                        || defaultKnowledgeBlacklist.contains(wrappedObject)) {
                         return false;
                     } else if (object instanceof ItemStack) {
                         Collection<String> oreNames = OreDictionaryHelper.getOreNames((ItemStack) object);
                         for (String oreName : oreNames) {
-                            if (knowledgeBlacklist.contains(WrappedStack.wrap(new OreStack(oreName)))) {
+                            WrappedStack stack = WrappedStack.wrap(new OreStack(oreName));
+                            if (knowledgeBlacklist.contains(stack) || defaultKnowledgeBlacklist.contains(stack)) {
                                 return false;
                             }
                         }
@@ -182,6 +185,31 @@ public class BlacklistRegistry {
                     save(blacklist);
                 }
             }
+        }
+    }
+
+    /**
+     * TODO Finish JavaDoc
+     *
+     * @param object
+     */
+    public void addToDefaultBlacklist(Object object) {
+
+        if (WrappedStack.canBeWrapped(object)) {
+
+            WrappedStack wrappedStack = WrappedStack.wrap(object, 1);
+            if (wrappedStack != null && !MinecraftForge.EVENT_BUS.post(new KnowledgeBlacklistEvent(object))) {
+                LogHelper.trace(
+                    KNOWLEDGE_BLACKLIST_MARKER,
+                    "[{}] Mod with ID '{}' added object {} to the player knowledge blacklist",
+                    LoaderHelper.getLoaderState(),
+                    Loader.instance()
+                        .activeModContainer()
+                        .getModId(),
+                    wrappedStack);
+                defaultKnowledgeBlacklist.add(WrappedStack.wrap(object, 1));
+            }
+
         }
     }
 

@@ -1,5 +1,6 @@
 package com.pahimar.ee3.api.knowledge;
 
+import com.pahimar.ee3.EquivalentExchange3;
 import com.pahimar.ee3.api.blacklist.BlacklistRegistryProxy;
 
 @Deprecated
@@ -24,6 +25,14 @@ public final class AbilityRegistryProxy {
      */
     public static void setAsNotLearnable(Object object) {
         BlacklistRegistryProxy.setAsNotLearnable(object);
+    }
+
+    /**
+     * Inner use only, for blacklist that shouldn't be saved
+     */
+    public static void innerSetAsNotLearnable(Object object) {
+        EquivalentExchange3.instance.getBlacklistRegistry()
+            .addToDefaultBlacklist(object);
     }
 
     /**
